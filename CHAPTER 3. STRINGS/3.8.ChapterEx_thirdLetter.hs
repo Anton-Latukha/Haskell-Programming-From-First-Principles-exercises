@@ -1,4 +1,4 @@
-module ExStrings where
+module ThirdLetter where
 
 string :: String
 string = "Curry is awesome"
