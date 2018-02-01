@@ -18,6 +18,9 @@ string_a = func_a string
 char_b :: Char
 char_b = func_b string
 
+string_b :: String
+string_b = concat [[char_b], "\n"]
+
 string_c :: String
 string_c = func_c string
 
@@ -26,4 +29,6 @@ main :: IO()
 main = do
     putStrLn string_a
     putChar char_b
+    putChar '\n'
+    putStr string_b
     putStrLn string_c
