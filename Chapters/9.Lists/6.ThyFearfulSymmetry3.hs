@@ -39,4 +39,4 @@ main :: IO ()
 main =
     print $ "Are they equal? "
         ++ show (myLines sentences '\n'
-        == shouldEqual)
+              == shouldEqual)
