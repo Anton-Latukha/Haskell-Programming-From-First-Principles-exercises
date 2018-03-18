@@ -1,0 +1,15 @@
+a = foldr (++) "" ["woot", "WOOT", "woot"]
+b = foldr max '\0' "fear is the little death"
+c = and [False, True]
+d = True
+e = foldl (flip $ (++).show) "" [1..5]
+f1 = foldr const 0 [1..5] -- (fold func must transform (a -> b -> b), const is (a -> b -> a)
+f2 = foldl const 'a' [1..5] -- const fits as foldl func
+f3 = head [1..5]
+g1 = foldr const 'a' "tacos" -- same
+g2 = foldl const 0 "tacos"
+g3 = head "tacos"
+h1 = foldl (flip const) '\0' "burritos"
+h2 = last "burritos"
+i1 = foldl (flip const) 0 [1..5]
+i2 = last [1..5]
