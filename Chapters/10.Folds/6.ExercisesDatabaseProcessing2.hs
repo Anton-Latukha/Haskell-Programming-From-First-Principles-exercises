@@ -28,7 +28,7 @@ filterDbNumber dbRecords = foldr (\ element result -> go element result) [] dbRe
             | isDbNumber (element) = result++[returnNum (element)]
             | True = result
 
-            
+
 isDbString, isDbNumber, isDbDate :: DatabaseItem -> Bool
 
 isDbString (DbString _) = True
