@@ -22,22 +22,22 @@ filterDbDate dbRecords = foldr (\ element result -> go element result) [] dbReco
             | isDbDate (element) = result++[returnUTC (element)]
             | True = result
             
-filterDbDate :: [DatabaseItem] -> [Integer]
+filterDbNumber :: [DatabaseItem] -> [Integer]
 filterDbNumber dbRecords = foldr (\ element result -> go element result) [] dbRecords
     where go element result
             | isDbNumber (element) = result++[returnNum (element)]
             | True = result
 
-isDbString :: DatabaseItem -> Bool
+            
+isDbString, isDbNumber, isDbDate :: DatabaseItem -> Bool
+
 isDbString (DbString _) = True
 isDbString _     = False
 
-isDbNumber :: DatabaseItem -> Bool
 isDbNumber (DbNumber _) = True
 isDbNumber _     = False
 
-isDbDate :: DatabaseItem -> Bool
-isDbDate (DbDate (UTCTime _ _)) = True
+isDbDate (DbDate _) = True
 isDbDate _     = False
 
 printUtc :: DatabaseItem -> IO ()
@@ -46,5 +46,5 @@ printUtc (DbDate time) = print time
 returnUTC :: DatabaseItem -> UTCTime
 returnUTC (DbDate time) = time
 
-returnUTC :: DatabaseItem -> Integer
+returnNum :: DatabaseItem -> Integer
 returnNum (DbNumber num) = num
