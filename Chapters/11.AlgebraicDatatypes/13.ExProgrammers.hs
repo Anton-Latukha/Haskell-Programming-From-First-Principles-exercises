@@ -35,4 +35,7 @@ allLanguages :: [ProgLang]
 allLanguages = [Haskell, Agda, Idris, PureScript]
 
 allProgrammers :: [OperatingSystem] -> [ProgLang] -> [Programmer]
-allProgrammers oses langs = fmap (\ (x,y) -> Programmer x y) ([(x,y) | x <- oses, y <- langs])
+allProgrammers oses langs = tuplesIntoProgrammers cartesianTuples
+    where
+        cartesianTuples = ([(x,y) | x <- oses, y <- langs])
+        tuplesIntoProgrammers = fmap (\ (x,y) -> Programmer x y)
