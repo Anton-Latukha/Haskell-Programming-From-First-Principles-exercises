@@ -35,4 +35,4 @@ allLanguages :: [ProgLang]
 allLanguages = [Haskell, Agda, Idris, PureScript]
 
 allProgrammers :: [OperatingSystem] -> [ProgLang] -> [Programmer]
-allProgrammers oses langs = fmap (\ x -> Programmer fst(x) snd(x)) (zipWith (,) oses langs)
+allProgrammers oses langs = fmap (\ (x,y) -> Programmer x y) (zipWith (,) oses langs)
