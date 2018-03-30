@@ -17,4 +17,13 @@ foldTree :: (a -> b -> b)
   -> b
 
 foldTree f result Leaf = result
-foldTree f result (Node left a right) = (foldTree (foldTree f (f a result) right) left)
+foldTree f result (Node left a right) = (foldTree f (foldTree f (f a result) right) left)
+
+--- Ver #2
+treeToList :: BinaryTree a -> [a]
+treeToList Leaf = []
+treeToList (Node left a right) = ((treeToList left) ++ [a] ++ (treeToList right)) -- yep.
+
+foldTree2 :: (a -> b -> b) -> b -> BinaryTree a -> b
+foldTree2 f result Leaf = result
+foldTree2 f result tree = foldr f result (treeToList tree)
