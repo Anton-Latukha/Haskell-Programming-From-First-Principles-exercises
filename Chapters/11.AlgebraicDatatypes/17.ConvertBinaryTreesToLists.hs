@@ -26,3 +26,9 @@ mapOkay =
   if mapTree (+1) testTree' == mapExpected
   then print "yup okay!"
   else error "test failed!"
+
+treeToList :: BinaryTree a -> [a]
+treeToList tree = go tree []
+  where
+    go Leaf list = list
+    go (Node left a right) list = ((go left []) ++ [a] ++ (go right []))
