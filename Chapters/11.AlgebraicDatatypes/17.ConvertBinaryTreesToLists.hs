@@ -6,10 +6,8 @@ data BinaryTree a =
                   deriving (Eq, Ord, Show)
 
 treeToList :: BinaryTree a -> [a]
-treeToList tree = go tree []
-  where
-    go Leaf list = list
-    go (Node left a right) list = ((go left []) ++ [a] ++ (go right []))
+treeToList Leaf = []
+treeToList (Node left a right) = ((treeToList left) ++ [a] ++ (treeToList right)) -- yep.
 
 testTree :: BinaryTree Integer
 testTree =
@@ -25,6 +23,6 @@ testPreorder =
 
 testInorder :: IO ()
 testInorder =
-  if sort (treeToList testTree) == [1, 2, 3]
+  if sort (treeToList testTree) == [1, 2, 3] -- If binary tree is not sorted - sort the list.
   then putStrLn "Inorder fine!"
   else putStrLn "Bad news bears."
