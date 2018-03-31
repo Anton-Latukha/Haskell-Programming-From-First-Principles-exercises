@@ -14,4 +14,3 @@ cipherVigenere text key = zipWith (\ t k -> chr ((mod ((ord t) - (ord k)) 32)+64
 
 unCipherVigenere :: String -> String -> String
 unCipherVigenere text key = zipWith (\ t k -> chr ((mod ((ord t) + (ord k)) 32)+64)) text (cycle key)
-
