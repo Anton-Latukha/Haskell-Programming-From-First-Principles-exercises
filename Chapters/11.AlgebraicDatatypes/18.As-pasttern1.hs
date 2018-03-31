@@ -3,7 +3,7 @@
 import Data.List
 
 isSubseqOf :: (Eq a) => [a] -> [a] -> Bool
-isSubseqOf input@(i:is) set@(s:ss)
+isSubseqOf input@(i:is) set
   | is == [] && elem i set = True
   | set == [] = False
   | elem i set = isSubseqOf is (tail (dropWhile (/=i) set))
