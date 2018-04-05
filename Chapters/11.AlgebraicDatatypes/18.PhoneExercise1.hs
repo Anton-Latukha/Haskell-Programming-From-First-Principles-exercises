@@ -8,9 +8,11 @@
 -- | * ^    | 0 + _ | # .,   |
 -- ---------------------------
 
-convertPhone :: String -> DaPhone [(Button, Values)]
+import Data.List
 
-data DaPhone = DaPhone 
+type Button = Char
+type Values = String
+data Phone = Phone [(Button, Values)]
 
 phone = [
   ('*', "^*"),
@@ -27,15 +29,17 @@ phone = [
   ('9', "wxyz9")
   ]
 
-                               -- valid Digit = "123456789*#"
-data Button = '*' | '#' | '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'
+validButton :: Button -> Bool
+validButton button = elem button "*#0123456789"
+
+validTaps :: [Button] -> Bool
 
 -- Valid presses: 1 and up
 type Presses = Int
 
-reverseTaps :: DaPhone -> Char -> [(Digit, Presses)]
-reverseTaps = undefined
--- assuming the default phone definition
--- 'a' -> [('2', 1)]
--- 'A' -> [('*', 1), ('2', 1)]
+sameTaps :: Phone -> String -> Char
+sameTaps phone str
+  | head str == '1' = str
+  | True =
 
+    elemIndex (fst (unzip phone))
