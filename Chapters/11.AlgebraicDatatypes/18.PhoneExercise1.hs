@@ -14,32 +14,26 @@ type Button = Char
 type Values = String
 data Phone = Phone [(Button, Values)]
 
-phone = [
-  ('*', "^*"),
-  ('#', ".,#"),
-  ('0', " +_0"),
-  ('1', "1"),
-  ('2', "abc2"),
-  ('3', "def3"),
-  ('4', "ghi4"),
-  ('5', "jkl5"),
-  ('6', "mno6"),
-  ('7', "pqrs7"),
-  ('8', "tuv8"),
-  ('9', "wxyz9")
-  ]
+phoneButtons = "*#0123456789"
+phoneCommands = ["^*", ".,#", " +_0", "1", "abc2", "def3", "ghi4", "jkl5", "mno6", "pqrs7", "tuv8", "wxyz9"]
 
-validButton :: Button -> Bool
-validButton button = elem button "*#0123456789"
+phoneDataModel = zip phoneButtons phoneCommands
 
-validTaps :: [Button] -> Bool
+-- Validate sequence element as a legitimate button
+validButton :: Phone -> Button -> Bool
+validButton phone button = elem button phoneButtons
 
--- Valid presses: 1 and up
-type Presses = Int
+-- Takes sequence of button presses and returnes list of subsequent clusters of the same presses
+splitToSameTaps :: [Button] -> [[Button]]
+splitToSameTaps [] = [[]]
+splitToSameTaps str = sameTapsCluster ++ reminder
+  where
+    sameTaps = takeWhile (== head str) str
+    sameTapsCluster = [sameTaps]
+    reminder = splitToSameTaps (drop (length sameTaps) str)
 
-sameTaps :: Phone -> String -> Char
+-- Translate cluster of the same button presses into according command
+sameTaps :: Phone -> [Button] -> [Char]
 sameTaps phone str
   | head str == '1' = str
-  | True =
-
-    elemIndex (fst (unzip phone))
+  | True = [(cycle (phoneCommands !! (elemIndex (head str) phoneButtons))) !! (length str-1)]
