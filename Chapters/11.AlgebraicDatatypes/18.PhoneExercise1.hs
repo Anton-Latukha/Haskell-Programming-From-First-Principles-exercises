@@ -34,6 +34,9 @@ splitToSameTaps str = sameTapsCluster ++ reminder
 
 -- Translate cluster of the same button presses into according command
 sameTaps :: Phone -> [Button] -> [Char]
-sameTaps phone str
-  | head str == '1' = str
-  | True = [(cycle (phoneCommands !! (elemIndex (head str) phoneButtons))) !! (length str-1)]
+sameTaps phone str = go phone str (elemIndex (head str) phoneButtons)
+  where
+    go _ _ Nothing = []
+    go phone str (Just index)
+      | head str == '1' = str
+      | True = [cycle (phoneCommands !! index) !! (length str-1)]
