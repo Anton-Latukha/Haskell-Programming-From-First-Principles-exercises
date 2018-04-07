@@ -13,66 +13,47 @@ import Data.Maybe
 import Data.Char
 
 
--- type Button = Char
--- type Values = String
-data Phone = Phone [(Char, String)]
+type Button = Char
+type Buttons = [Button]
+type Symbol = Char
+type Symbols = [Symbol]
+
 
 -- Allowed buttons
-phoneButtons :: [Char]
+phoneButtons :: Buttons
 phoneButtons = "*#0123456789"
 
 -- Index+1 == number of button presses
-phoneCommands :: [String]
+phoneCommands :: [Symbols]
 phoneCommands = ["^*", ".,#", " +_0", "1", "abc2", "def3", "ghi4", "jkl5", "mno6", "pqrs7", "tuv8", "wxyz9"]
 
+
 -- Create a consistent data model, but only if lists of buttons and commands have same length
-phoneDataModel :: [Char] -> [String] -> Phone
+phoneDataModel :: Buttons -> [Symbols] -> Phone
 phoneDataModel phoneButtons phoneCommands
   | length phoneButtons == length phoneCommands = Phone (zip phoneButtons phoneCommands)
   | True = Phone []
 
--- Validate sequence element as a legitimate button
-validButton :: [Char] -> Char -> Bool
-validButton phoneButtons button = elem button phoneButtons
-
------- Conversion of Button presses code to commands (text)
-
--- Takes sequence of button presses and returnes list of subsequent clusters of the same presses
-splitToSameTaps :: [Char] -> [[Char]]
-splitToSameTaps [] = [[]]
-splitToSameTaps str = sameTapsCluster ++ reminder
-  where
-    sameTaps = takeWhile (== head str) str
-    sameTapsCluster = [sameTaps]
-    reminder = splitToSameTaps (drop (length sameTaps) str)
-
--- Translate cluster of the same button presses into according command
-sameTaps :: [Char] -> [Char] -> [String] -> [Char]
-sameTaps phoneButtons code phoneCommands = go phoneCommands code (elemIndex (head code) phoneButtons)
-  where
-    go _ _ Nothing = []
-    go phoneCommands code (Just index)
-      -- As 1 has one value, and as phones did - return 1 as many times as it was pressed.
-      | head code == '1' = code
-      -- Get the command by matching the number of the same presses in the cluster to the infinite loop of command values
-      | True = [cycle (phoneCommands !! index) !! (length code-1)]
 
 ------ Conversion from text (commands) to Button presses
 
+
 -- Create a reverse (symbol -> button code) dictionary
-codesArr :: [[[Char]]]
+codesArr :: [[Buttons]]
 codesArr = fmap (\ value -> fmap (\ c -> take ((fromMaybe 5 (elemIndex c value)) + 1) (repeat (phoneButtons !! fromMaybe 5 (elemIndex value phoneCommands)))) value) phoneCommands
 
--- phoneCommands is [[Char]], codesArr is [[[Button]]]
-dictionary = zip (concat phoneCommands) (concat codesArr)
+
+-- phoneCommands is [Symbols], codesArr is [[Buttons]]
+dictionarySymbolToButtons :: [(Symbol, Buttons)]
+dictionarySymbolToButtons = zip (concat phoneCommands) (concat codesArr)
 
 
-convTextToCodes :: String -> [(Char,[Char])] -> [Char]
+convTextToCodes :: String -> [(Symbol, Buttons)] -> Buttons
 convTextToCodes text dictionary = concat (fmap (go dictionary) text)
   where
     go dictionary char
       | elem char (fmap fst dictionary) = fromMaybe "" (lookup char dictionary)
-      | elem char ['A'..'Z'] = "*" ++ (fromMaybe "" (lookup char dictionary))
+      | elem char ['A'..'Z'] = "*" ++ (fromMaybe "" (lookup (toLower char) dictionary))
       | True = ""
 
 
@@ -89,4 +70,43 @@ convo =
    "Just making sure rofl ur turn"]
 
 
-printT = (fmap (\ text -> convTextToCodes text dictionary)) convo
+main :: IO()
+main = do
+  mapM_ putStrLn ((fmap (\ text -> convTextToCodes text dictionarySymbolToButtons) convo))
+
+ 
+-----------
+---------- This portion left as so for future and not used
+-----------
+
+
+data Phone = Phone [(Button, Symbols)]
+
+-- Validate sequence element as a legitimate button
+validButton :: Buttons -> Button -> Bool
+validButton phoneButtons button = elem button phoneButtons
+
+
+----- Conversion of Buttons to Symbols
+
+
+-- Takes sequence of Buttons and returnes list of subsequent clusters of the same Button presses
+splitToSameTaps :: Buttons -> [Buttons]
+splitToSameTaps [] = [[]]
+splitToSameTaps str = sameTapsCluster ++ reminder
+  where
+    sameTaps = takeWhile (== head str) str
+    sameTapsCluster = [sameTaps]
+    reminder = splitToSameTaps (drop (length sameTaps) str)
+
+
+-- Translate cluster of the same Button presses into according Symbol
+sameTaps :: Buttons -> Buttons -> [Symbols] -> Symbols
+sameTaps phoneButtons code phoneCommands = go phoneCommands code (elemIndex (head code) phoneButtons)
+  where
+    go _ _ Nothing = []
+    go phoneCommands code (Just index)
+      -- As 1 has one value, and as phones did - return 1 as many times as it was pressed.
+      | head code == '1' = code
+      -- Get the command by matching the number of the same presses in the cluster to the infinite loop of command values
+      | True = [cycle (phoneCommands !! index) !! (length code-1)]
