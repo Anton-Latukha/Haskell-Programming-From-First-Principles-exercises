@@ -28,19 +28,12 @@ phoneCommands :: [Symbols]
 phoneCommands = ["^*", ".,#", " +_0", "1", "abc2", "def3", "ghi4", "jkl5", "mno6", "pqrs7", "tuv8", "wxyz9"]
 
 
--- Create a consistent data model, but only if lists of buttons and commands have same length
-phoneDataModel :: Buttons -> [Symbols] -> Phone
-phoneDataModel phoneButtons phoneCommands
-  | length phoneButtons == length phoneCommands = Phone (zip phoneButtons phoneCommands)
-  | True = Phone []
-
-
 ------ Conversion from text (commands) to Button presses
 
 
 -- Create a reverse (symbol -> button code) dictionary
 codesArr :: [[Buttons]]
-codesArr = fmap (\ value -> fmap (\ c -> take ((fromMaybe 5 (elemIndex c value)) + 1) (repeat (phoneButtons !! fromMaybe 5 (elemIndex value phoneCommands)))) value) phoneCommands
+codesArr = fmap (\ value -> fmap (\ c -> replicate ((fromMaybe 5 (elemIndex c value)) + 1) (phoneButtons !! fromMaybe 5 (elemIndex value phoneCommands))) value) phoneCommands
 
 
 -- phoneCommands is [Symbols], codesArr is [[Buttons]]
@@ -49,7 +42,7 @@ dictionarySymbolToButtons = zip (concat phoneCommands) (concat codesArr)
 
 
 convTextToCodes :: String -> [(Symbol, Buttons)] -> Buttons
-convTextToCodes text dictionary = concat (fmap (go dictionary) text)
+convTextToCodes text dictionary = concatMap (go dictionary) text
   where
     go dictionary char
       | elem char (fmap fst dictionary) = fromMaybe "" (lookup char dictionary)
@@ -74,7 +67,7 @@ main :: IO()
 main = do
   mapM_ putStrLn ((fmap (\ text -> convTextToCodes text dictionarySymbolToButtons) convo))
 
- 
+
 -----------
 ---------- This portion left as so for future and not used
 -----------
@@ -85,6 +78,13 @@ data Phone = Phone [(Button, Symbols)]
 -- Validate sequence element as a legitimate button
 validButton :: Buttons -> Button -> Bool
 validButton phoneButtons button = elem button phoneButtons
+
+-- Create a consistent data model, but only if lists of buttons and commands have same length
+phoneDataModel :: Buttons -> [Symbols] -> Phone
+phoneDataModel phoneButtons phoneCommands
+  | length phoneButtons == length phoneCommands = Phone (zip phoneButtons phoneCommands)
+  | True = Phone []
+
 
 
 ----- Conversion of Buttons to Symbols
