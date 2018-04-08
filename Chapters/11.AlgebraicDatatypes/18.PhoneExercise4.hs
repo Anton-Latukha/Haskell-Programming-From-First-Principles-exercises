@@ -88,4 +88,4 @@ main = do
   mapM_ putStrLn convo
   mapM_ putStrLn (fmap (convTextToCodes dictionarySymbolToButtons) convo)
   mapM_ print (fmap (fingerTaps dictionarySymbolToButtons) convo)
-  mapM_ print (fmap (mostUsedSymbol) convo)
+  mapM_ print (fmap mostUsedSymbol convo)
