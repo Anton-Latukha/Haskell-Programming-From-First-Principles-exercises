@@ -8,17 +8,29 @@
 -- | * ^    | 0 + _ | # .,   |
 -- ---------------------------
 
--- We pretend we don't know about additionals (Data.Text with must be imported qualified and other points that explained in later chapters)
+-- We pretend we don't know additional Haskell things (Data.Text with must be imported qualified and other points that explained in later chapters)
 
-import Data.List
-import Data.Maybe
-import Data.Char
+import Data.List (sort, elemIndex)
+import Data.Maybe (fromMaybe)
+import Data.Char (toLower)
 
 
 type Button = Char
 type Buttons = [Button]
 type Symbol = Char
 type Symbols = [Symbol]
+
+messages :: [String]
+messages =
+  ["Wanna play 20 questions",
+   "Ya",
+   "U 1st haha",
+   "Lol ok. Have u ever tasted alcohol",
+   "Lol ya",
+   "Wow ur cool haha. Ur turn",
+   "Ok. Do u think I am pretty Lol",
+   "Lol ya",
+   "Just making sure rofl ur turn"]
 
 
 -- Allowed buttons
@@ -34,13 +46,14 @@ phoneCommands = ["^*", ".,#", " +_0", "1", "abc2", "def3", "ghi4", "jkl5", "mno6
 
 
 -- Create a reverse (symbol -> button code) dictionary
+--- Find the position of symbol in the string, and that position is the number of code repeats
 codesArr :: [[Buttons]]
 codesArr = fmap (\ value -> fmap (\ c -> replicate ((fromMaybe 5 (elemIndex c value)) + 1) (phoneButtons !! fromMaybe 5 (elemIndex value phoneCommands))) value) phoneCommands
 
 
 -- phoneCommands is [Symbols], codesArr is [[Buttons]]
-dictionarySymbolToButtons :: [(Symbol, Buttons)]
-dictionarySymbolToButtons = zip (concat phoneCommands) (concat codesArr)
+dictionarySymbolToCodes :: [(Symbol, Buttons)]
+dictionarySymbolToCodes = zip (concat phoneCommands) (concat codesArr)
 
 
 convTextToCodes :: [(Symbol, Buttons)] -> String -> Buttons
@@ -51,22 +64,10 @@ convTextToCodes dictionary text = concatMap (go dictionary) text
       | elem char ['A'..'Z'] = "*" ++ (fromMaybe "" (lookup (toLower char) dictionary))
       | True = ""
 
-
-convo :: [String]
-convo =
-  ["Wanna play 20 questions",
-   "Ya",
-   "U 1st haha",
-   "Lol ok. Have u ever tasted alcohol",
-   "Lol ya",
-   "Wow ur cool haha. Ur turn",
-   "Ok. Do u think I am pretty Lol",
-   "Lol ya",
-   "Just making sure rofl ur turn"]
+codeLength :: [(Symbol, Buttons)] -> String -> Int
+codeLength dictionary text = length (convTextToCodes dictionary text)
 
 
-fingerTaps :: [(Symbol, Buttons)] -> String -> Int
-fingerTaps dictionary text = length (convTextToCodes dictionary text)
 
 
 -- Takes list of elements and returnes lists of clusters
@@ -96,14 +97,32 @@ mostUsedWord str = mostUsed cleanWords
       filter (flip elem (['a'..'z']++" "))
              (strToLower str))
 
-listOfStrToStr :: [String] -> String
-listOfStrToStr messages = concatMap (++ " ") messages
+messagesToStr :: [String] -> String
+messagesToStr messages = concatMap (++ " ") messages
 
 main :: IO()
 main = do
-  mapM_ putStrLn convo
-  mapM_ putStrLn (fmap (convTextToCodes dictionarySymbolToButtons) convo)
-  mapM_ print (fmap (fingerTaps dictionarySymbolToButtons) convo)
-  mapM_ print (fmap mostUsedSymbol convo)
-  print (mostUsedSymbol (concat convo))
-  print (mostUsedWord (listOfStrToStr convo))
+  putStrLn ""
+
+  putStrLn "Messages:"
+  mapM_ putStrLn messages
+  putStrLn ""
+
+  putStrLn "Coded messages:"
+  mapM_ putStrLn (fmap (convTextToCodes dictionarySymbolToCodes) messages)
+  putStrLn ""
+
+  putStrLn "Number of codes for a message:"
+  mapM_ print (fmap (codeLength dictionarySymbolToCodes) messages)
+  putStrLn ""
+
+  putStrLn "Most used symbol for a message:"
+  mapM_ print (fmap mostUsedSymbol messages)
+  putStrLn ""
+
+  putStrLn "The most frequent symbol overall:"
+  print (mostUsedSymbol (concat messages))
+  putStrLn ""
+
+  putStrLn "The most frequent word overall:"
+  print (mostUsedWord (messagesToStr messages))
