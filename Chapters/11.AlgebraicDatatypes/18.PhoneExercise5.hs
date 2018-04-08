@@ -83,17 +83,21 @@ strToLower text = fmap toLower text
 mostUsed :: Ord a => [a] -> a
 mostUsed list = snd (maximum records)
   where
-    -- records :: [(Int, Symbol)]
     records = fmap (\ cluster -> (length cluster, head cluster)) (clusterization (sort list))
 
 mostUsedSymbol :: Symbols -> Symbol
 mostUsedSymbol str = mostUsed (strToLower str)
 
--- mostUsedWord :: String -> String
-mostUsedWord str = mostUsed (words (filter (flip elem (['a'..'z']++" ")) (strToLower str)))
+mostUsedWord :: String -> String
+mostUsedWord str = mostUsed cleanWords
+  where
+    cleanWords = words (
+      -- Pass only letters and spaces (leave out other symbols)
+      filter (flip elem (['a'..'z']++" "))
+             (strToLower str))
 
 listOfStrToStr :: [String] -> String
-listOfStrToStr messages = concat (fmap (++ " ") messages)
+listOfStrToStr messages = concatMap (++ " ") messages
 
 main :: IO()
 main = do
