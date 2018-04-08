@@ -73,9 +73,9 @@ codeLength dictionary text = length (convTextToCodes dictionary text)
 -- Takes list of elements and returnes lists of clusters
 clusterization :: (Ord a) => [a] -> [[a]]
 clusterization [] = [[]]
-clusterization list = cluster : reminder
+clusterization list@(l:_) = cluster : reminder
   where
-    cluster = takeWhile (== head list) list
+    cluster = takeWhile (== l) list
     reminder = clusterization (drop (length cluster) list)
 
 strToLower :: String -> String
@@ -84,7 +84,9 @@ strToLower text = fmap toLower text
 mostUsed :: Ord a => [a] -> a
 mostUsed list = snd (maximum records)
   where
-    records = fmap (\ cluster -> (length cluster, head cluster)) (clusterization (sort list))
+    records = fmap frequencyOfCluster clusters
+    frequencyOfCluster cluster = (length cluster, head cluster)
+    clusters = (clusterization (sort list))
 
 mostUsedSymbol :: Symbols -> Symbol
 mostUsedSymbol str = mostUsed (strToLower str)
