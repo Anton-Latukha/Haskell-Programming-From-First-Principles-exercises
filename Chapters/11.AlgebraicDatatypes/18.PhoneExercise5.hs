@@ -89,8 +89,11 @@ mostUsed list = snd (maximum records)
 mostUsedSymbol :: Symbols -> Symbol
 mostUsedSymbol str = mostUsed (strToLower str)
 
-mostUsedWord :: String -> String
-mostUsedWord str = mostUsed (words (strToLower str))
+-- mostUsedWord :: String -> String
+mostUsedWord str = mostUsed (words (filter (flip elem (['a'..'z']++" ")) (strToLower str)))
+
+listOfStrToStr :: [String] -> String
+listOfStrToStr messages = concat (fmap (++ " ") messages)
 
 main :: IO()
 main = do
@@ -99,4 +102,4 @@ main = do
   mapM_ print (fmap (fingerTaps dictionarySymbolToButtons) convo)
   mapM_ print (fmap mostUsedSymbol convo)
   print (mostUsedSymbol (concat convo))
-  print (mostUsedWord (concat convo))
+  print (mostUsedWord (listOfStrToStr convo))
