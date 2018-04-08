@@ -70,4 +70,4 @@ fingerTaps dictionary text = length (convTextToCodes dictionary text)
 main :: IO()
 main = do
   mapM_ putStrLn ((fmap (\ text -> convTextToCodes dictionarySymbolToButtons text) convo))
-  mapM_ putStrLn ((fmap (\ text -> fingerTaps dictionarySymbolToButtons text) convo))
+  mapM_ print ((fmap (\ text -> fingerTaps dictionarySymbolToButtons text) convo))
