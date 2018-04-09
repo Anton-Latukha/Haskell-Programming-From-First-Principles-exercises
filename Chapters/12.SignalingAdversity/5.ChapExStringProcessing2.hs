@@ -10,7 +10,9 @@ countTheBeforeVowel :: String -> Integer
 countTheBeforeVowel str = go str
   where
     go :: String -> Integer
-    go str = foldr (\ t r -> if fst t && snd t then r+1 else r) 0 reqTuples
+    go str = foldr countByRequirements 0 reqTuples
+
+    countByRequirements tuple result = if fst tuple && snd tuple then result+1 else result
 
     reqTuples = zip listThe (tail listVowel)
 
@@ -29,3 +31,10 @@ countTheBeforeVowel str = go str
     checkThe str = if fmap (toLower) str == "the"
       then True
       else False
+
+string = "The evil cow snuffs the aged crow"
+
+main :: IO()
+main = do
+  putStrLn string
+  print (countTheBeforeVowel string)
