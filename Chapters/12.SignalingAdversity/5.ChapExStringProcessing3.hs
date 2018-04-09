@@ -10,7 +10,8 @@ countTheBeforeVowel str = foldr countByRequirements 0 (checkVowels str)
   where
 
     countByRequirements :: Bool -> Integer -> Integer
-    countByRequirements bool result = if bool then result+1 else result
+    countByRequirements True result = result+1
+    countByRequirements _ result = result
 
     checkVowels :: String -> [Bool]
     checkVowels = fmap (\ c -> toLower c `elem` ['a','e','i','o','u','y'])
