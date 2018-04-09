@@ -4,7 +4,6 @@
 -- 1
 
 import Data.Char (toLower)
-import Data.Maybe (fromMaybe)
 
 countTheBeforeVowel :: String -> Integer
 countTheBeforeVowel str = go str
@@ -16,23 +15,20 @@ countTheBeforeVowel str = go str
 
     reqTuples = zip listThe (tail listVowel)
 
-    listThe = foldr (\ w l -> (checkThe w) : l) [] wOrds
+    listThe = fmap checkThe wOrds
 
-    listVowel = foldr (\ w l -> (checkVowel w) : l) [] wOrds
+    listVowel = fmap checkVowel wOrds
 
     wOrds = words str
 
     checkVowel :: String -> Bool
-    checkVowel str = if elem (head (fmap (toLower) str)) ['a','e','i','o','u']
-      then True
-      else False
+    checkVowel str = elem (head (fmap toLower str)) ['a','e','i','o','u']
 
     checkThe :: String -> Bool
-    checkThe str = if fmap (toLower) str == "the"
-      then True
-      else False
+    checkThe str = fmap toLower str == "the"
 
-string = "The evil cow snuffs the aged crow"
+string :: String
+string = "The evil cow sniffs the aged crow"
 
 main :: IO()
 main = do
