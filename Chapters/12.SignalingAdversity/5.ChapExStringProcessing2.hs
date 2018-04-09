@@ -7,17 +7,25 @@ import Data.Char (toLower)
 import Data.Maybe (fromMaybe)
 
 countTheBeforeVowel :: String -> Integer
-countTheBeforeVowel str = go [] str
+countTheBeforeVowel str = go str
   where
-    go :: Int -> String -> Integer
-    go result_list str = foldr (\ s r -> zip (checkThe s r) (tail (checkVowel s r))) result_list (words str)
+    go :: String -> Integer
+    go str = foldr (\ t r -> if fst t && snd t then r+1 else r) 0 reqTuples
 
-    checkVowel :: String -> [Bool] -> [Bool]
-    checkVowel str result_list = if elem (head (tolower str)) [a,e,i,o,u]
-      then True : result_list
-      else False : result_list
+    reqTuples = zip listThe (tail listVowel)
 
-    checkThe :: String -> [Bool] -> [Bool]
-    checkThe str result_list = if fmap (toLower) str == "the"
-      then True : result_list
-      else False : result_list
+    listThe = foldr (\ w l -> (checkThe w) : l) [] wOrds
+
+    listVowel = foldr (\ w l -> (checkVowel w) : l) [] wOrds
+
+    wOrds = words str
+
+    checkVowel :: String -> Bool
+    checkVowel str = if elem (head (fmap (toLower) str)) ['a','e','i','o','u']
+      then True
+      else False
+
+    checkThe :: String -> Bool
+    checkThe str = if fmap (toLower) str == "the"
+      then True
+      else False
