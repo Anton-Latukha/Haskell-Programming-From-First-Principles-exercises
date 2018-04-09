@@ -6,10 +6,8 @@
 import Data.Char (toLower)
 
 countTheBeforeVowel :: String -> Integer
-countTheBeforeVowel str = go str
+countTheBeforeVowel str = foldr countByRequirements 0 reqTuples
   where
-    go :: String -> Integer
-    go str = foldr countByRequirements 0 reqTuples
 
     countByRequirements tuple result = if fst tuple && snd tuple then result+1 else result
 
@@ -22,7 +20,7 @@ countTheBeforeVowel str = go str
     wOrds = words str
 
     checkVowel :: String -> Bool
-    checkVowel str = elem (head (fmap toLower str)) ['a','e','i','o','u']
+    checkVowel str = head (fmap toLower str) `elem` ['a','e','i','o','u']
 
     checkThe :: String -> Bool
     checkThe str = fmap toLower str == "the"
