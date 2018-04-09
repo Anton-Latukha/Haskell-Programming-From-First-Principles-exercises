@@ -5,8 +5,8 @@
 
 import Data.Char (toLower)
 
-countTheBeforeVowel :: String -> Integer
-countTheBeforeVowel str = foldr countByRequirements 0 (checkVowels str)
+countVowels :: String -> Integer
+countVowels str = foldr countByRequirements 0 (checkVowels str)
   where
 
     countByRequirements :: Bool -> Integer -> Integer
@@ -22,4 +22,4 @@ string = "The evil cow sniffs the aged crow"
 main :: IO()
 main = do
   putStrLn string
-  print (countTheBeforeVowel string)
+  print (countVowels string)
