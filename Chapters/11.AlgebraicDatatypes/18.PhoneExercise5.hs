@@ -44,11 +44,14 @@ phoneCommands = ["^*", ".,#", " +_0", "1", "abc2", "def3", "ghi4", "jkl5", "mno6
 
 ------ Conversion from text (commands) to Button presses
 
-
 -- Create a reverse (symbol -> button code) dictionary
 --- Find the position of symbol in the string, and that position is the number of code repeats
 codesArr :: [[Buttons]]
-codesArr = fmap (\ value -> fmap (\ c -> replicate ((fromMaybe 5 (elemIndex c value)) + 1) (phoneButtons !! fromMaybe 5 (elemIndex value phoneCommands))) value) phoneCommands
+codesArr = fmap (fmap (symbol_to_code)) phoneCommands
+  where
+    dictionary_symbol_button = zip phoneCommands phoneButtons
+    number_of_codes = fromMaybe 5 (elemIndex symbol symbols)
+    symbol_to_code symbol = replicate number_of_codes (fromMaybe '\NUL' lookup symbol dictionary_symbol_button)
 
 
 -- phoneCommands is [Symbols], codesArr is [[Buttons]]
