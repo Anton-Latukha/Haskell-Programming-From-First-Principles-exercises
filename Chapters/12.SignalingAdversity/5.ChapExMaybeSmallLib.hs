@@ -31,3 +31,11 @@ catMaybes list = foldr (go) [] list
   where
     go (Just a) newList = a:newList
     go Nothing newList = newList
+
+-- 6. Implement sequence
+flipMaybe :: [Maybe a] -> Maybe [a]
+flipMaybe listMaybe
+  | Nothing `elem` listMaybe = Nothing
+  | otherwise = Just (foldr (go) [] listMaybe)
+    where
+      go (Just a) newList = a:newList
