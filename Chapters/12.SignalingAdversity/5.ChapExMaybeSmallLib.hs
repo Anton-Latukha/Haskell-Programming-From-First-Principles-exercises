@@ -15,3 +15,8 @@ mayybee _ f (Just a) = f a
 -- 3. Fallback value
 fromMaybe :: a -> Maybe a -> a
 fromMaybe fallback maybe = mayybee fallback (id) maybe
+
+-- 4. Converting List <-> Maybe
+listToMaybe :: [a] -> Maybe a
+listToMaybe (x:_) = Just x
+listToMaybe [] = Nothing
