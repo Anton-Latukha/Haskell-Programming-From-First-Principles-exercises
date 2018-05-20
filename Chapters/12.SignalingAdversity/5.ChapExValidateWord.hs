@@ -1,10 +1,12 @@
 import Data.Char
 
+-- Returning Bool instead of Maybe that would make the code cleaner.
+
 countVowel :: String -> Int
-countVowel string = length (filter (\x -> (toLower x) `elem` "aeiouy") string)
+countVowel string = length (filter (\x -> toLower x `elem` "aeiouy") string)
 
 countConsonant :: String -> Int
-countConsonant string = length (filter (\x -> (toLower x) `elem` "bcdfghjklmnprstvxz") string)
+countConsonant string = length (filter (\x -> toLower x `elem` "bcdfghjklmnprstvxz") string)
 
 compareConsVow :: String -> Bool
 compareConsVow string = countConsonant string >= countVowel string
