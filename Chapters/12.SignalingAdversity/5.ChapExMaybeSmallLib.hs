@@ -20,3 +20,7 @@ fromMaybe fallback maybe = mayybee fallback (id) maybe
 listToMaybe :: [a] -> Maybe a
 listToMaybe (x:_) = Just x
 listToMaybe [] = Nothing
+
+maybeToList :: Maybe a -> [a]
+maybeToList (Just val) = [val]
+maybeToList Nothing = []
