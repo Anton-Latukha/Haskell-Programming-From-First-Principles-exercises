@@ -24,3 +24,10 @@ listToMaybe [] = Nothing
 maybeToList :: Maybe a -> [a]
 maybeToList (Just val) = [val]
 maybeToList Nothing = []
+
+-- 5. Drop Nothing values from List
+catMaybes :: [Maybe a] -> [a]
+catMaybes list = foldr (go) [] list
+  where
+    go (Just a) newList = a:newList
+    go Nothing newList = newList
