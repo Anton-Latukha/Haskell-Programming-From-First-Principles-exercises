@@ -35,3 +35,8 @@ eitherMaybe' _ _ = Nothing
 either' :: (a -> c) -> (b -> c) -> Either a b -> c
 either' fac _ (Left a) = fac a
 either' _ fbc (Right b) = fbc b
+
+-- 6.
+eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe'' fbc (Right b) = Just (either' (fbc) (fbc) (Right b))
+eitherMaybe'' _ _ = Nothing
