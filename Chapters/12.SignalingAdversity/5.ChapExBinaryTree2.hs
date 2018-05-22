@@ -11,8 +11,8 @@ unfold f a = go (f a)
     go Nothing = Leaf
 
 treeBuild :: Integer -> BinaryTree Integer
-treeBuild n = unfold (\x -> if x < n then Just (a+1, a, a+1) else Nothing) 0
-  where
-    go a
-      | a < n = Just (a+1, a, a+1)
-      | otherwise = Nothing
+treeBuild n = unfold (\x ->
+                        if x < n
+                        then Just (x+1, x, x+1)
+                        else Nothing
+                     ) 0
