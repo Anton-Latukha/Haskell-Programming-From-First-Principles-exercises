@@ -16,10 +16,16 @@ rights' eitherList = foldr (go) [] eitherList
     go _             silos = silos
 
 
--- 3.
+-- 3. Sort lefts and rights to separate lists
 partitionEithers' :: [Either a b]
                   -> ([a], [b])
 partitionEithers' eitherList = foldr (go) ([],[]) eitherList
   where
     go (Left left)   (l, r) = ((left:l),r)
     go (Right right) (l, r) = (l,(right:r))
+
+
+-- 4. Just Right, Nothing Left
+eitherMaybe' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe' f (Right b) = Just (f b)
+eitherMaybe' _ _ = Nothing
