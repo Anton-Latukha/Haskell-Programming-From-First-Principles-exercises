@@ -14,3 +14,12 @@ rights' eitherList = foldr (go) [] eitherList
   where
     go (Right right) silos = right:silos
     go _             silos = silos
+
+
+-- 3.
+partitionEithers' :: [Either a b]
+                  -> ([a], [b])
+partitionEithers' eitherList = foldr (go) ([],[]) eitherList
+  where
+    go (Left left)   (l, r) = ((left:l),r)
+    go (Right right) (l, r) = (l,(right:r))
