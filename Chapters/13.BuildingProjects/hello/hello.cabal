@@ -1,13 +1,13 @@
 name:                hello
-version:             0.1.0.0
+version:             0.1.0.1
 synopsis:            Simple project template from stack
 description:         Please see README.md
-homepage:            https://github.com/bitemyapp/hello#readme
+homepage:            blog.latukha.com
 license:             BSD3
 license-file:        LICENSE
-author:              Your Name Here
-maintainer:          example@email.com
-copyright:           2016, Your Name Here
+author:              Anton Latukha
+maintainer:          anton@latukha.com
+copyright:           2018, Anton Latukha
 category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
