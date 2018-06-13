@@ -1,5 +1,5 @@
 module Hello
-()
+( sayHello )
 where
 
 sayHello :: IO ()
