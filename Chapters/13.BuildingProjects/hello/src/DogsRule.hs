@@ -5,5 +5,5 @@ where
 
 dogs :: IO ()
 dogs = do
-  putStrLn "Doge! Whao is a puppy?!"
+  putStrLn "Doge! Who is a good puppy?!"
   putStrLn "YOU ARE!!!!"
