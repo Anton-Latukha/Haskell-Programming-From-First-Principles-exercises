@@ -1,0 +1,78 @@
+
+==================== FINAL INTERFACE ====================
+2018-06-14 13:59:37.169486 UTC
+
+interface main@main:Main 7103
+  interface hash: c7242dbbb754d9c87d9ddf988d331bed
+  ABI hash: 8586fcfcef1b6e1708386f7b22c69a9b
+  export-list hash: 1f196230d46b142ebbd063e2f9b9ee1f
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: 35d397bbd89b440df6db47cfb4420993
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  Main.main
+module dependencies: DogsRule Hello
+package dependencies: base-4.8.2.0* ghc-prim-0.4.0.0
+                      integer-gmp-1.0.0.0
+orphans: base-4.8.2.0:GHC.Base base-4.8.2.0:GHC.Float
+family instance modules: base-4.8.2.0:Control.Applicative
+                         base-4.8.2.0:Data.Either base-4.8.2.0:Data.Monoid
+                         base-4.8.2.0:Data.Type.Equality base-4.8.2.0:GHC.Generics
+import  -/  base-4.8.2.0:Prelude 694dcaf039efe62df1c44834e2dbd2fb
+import  -/  base-4.8.2.0:System.IO 0248c1e850b7ea124cf7a2e1669ebf67
+import  -/  ghc-prim-0.4.0.0:GHC.Types 6b27fb3fdbd0e3f0925a4496c66513bb
+import  -/  DogsRule 788d7b3a3edf457723d24e4d1de56367
+  exports: bc50758585243ae7deff8ec888d970e3
+  dogs e787cb3ab0b2c4b51d730fbc81e3af39
+import  -/  Hello 071adaf20fe01196636b25b993dee26a
+  exports: a8e6a64a88eeea005e80ad13f5e02029
+  sayHello 3fb216bbe8fb7ce42d1f490ae60edcac
+b9ccfa2b475125d1d62a4ad379fc8688
+  main :: GHC.Types.IO ()
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: InlineRule (0, True, True)
+                Main.main1 `cast` (Sym (GHC.Types.NTCo:IO[0] <()>_R)) -}
+9027a14019d0a6d36f86ba2e5ca8b152
+  main1 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1, Strictness: <L,U>,
+     Unfolding: (\ s :: GHC.Prim.State# GHC.Prim.RealWorld[OneShot] ->
+                 case GHC.IO.Handle.Text.hPutStr2
+                        GHC.IO.Handle.FD.stdout
+                        Main.main2
+                        GHC.Types.False
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case GHC.IO.Handle.Internals.wantReadableHandle_1
+                        @ GHC.Base.String
+                        GHC.IO.Handle.Text.hGetLine4
+                        GHC.IO.Handle.FD.stdin
+                        GHC.IO.Handle.Text.hGetLine2
+                          `cast`
+                        (<GHC.IO.Handle.Types.Handle__>_R
+                         ->_R Sym (GHC.Types.NTCo:IO[0] <GHC.Base.String>_R))
+                        ipv of ds2 { (#,#) ipv2 ipv3 ->
+                 case Hello.sayHello1 ipv3 ipv2 of ds3 { (#,#) ipv4 ipv5 ->
+                 DogsRule.dogs1 ipv4 } } }) -}
+1e377110c499fb94ba83ea788e106e3b
+  main2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   "Please input your nema: "#) -}
+7ad1aeebb1e61f9ccaf663e415d56c3c
+  main3 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1,
+     Unfolding: (GHC.TopHandler.runMainIO1
+                   @ ()
+                   Main.main1 `cast` (Sym (GHC.Types.NTCo:IO[0] <()>_R))) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: safe
+require own pkg trusted: False
+
