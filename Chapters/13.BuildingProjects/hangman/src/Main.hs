@@ -45,3 +45,6 @@ instance Show Puzzle where
     (intersperce ' ' $
      fmap renderPuzzleChar discovered
     ) ++ " Guessed so far: " ++ guessed
+
+freshPuzzle :: String -> Puzzle
+freshPuzzle word = Puzzle word (fmap (const Nothing) word) []
