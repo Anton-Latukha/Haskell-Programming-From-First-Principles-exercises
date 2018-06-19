@@ -10,9 +10,7 @@ import System.Random (randomRIO)
 type WordList = [String]
 
 allWords :: IO WordList
-allWords = do
-  dict <- readFile "data/dict.txt"
-  return (lines dict)
+allWords = lines <$> readFile "data/dict.txt"
 
 minWordLength :: Int
 minWordLength = 4
@@ -21,16 +19,14 @@ maxWordLength :: Int
 maxWordLength = 8
 
 gameWords :: IO WordList
-gameWords = do
-  aw <- allWords
-  return (filter gameLength aw)
+gameWords = filter gameLength <$> allWords
   where gameLength w =
           let l = length (w ::string )
           in     l >= minWordLength
               && l <  maxWordLength
 
-randomWord :: WordLit -> IO String
-randomWord = do
+randomWord :: WordList -> IO String
+randomWord wl = do
   randomIndex <- randomRIO (0,7775)
   return $ wl !! randomIndex
 
@@ -38,13 +34,32 @@ randomWord' :: IO String
 randomWord' = gameWords >>= randomWord
 
 data Puzzle =
-  Puzzle String [Maybe Char] [Char]
+  Puzzle String [Maybe Char] String
 
 instance Show Puzzle where
   show (Puzzle _ discovered guessed) =
-    (intersperce ' ' $
-     fmap renderPuzzleChar discovered
-    ) ++ " Guessed so far: " ++ guessed
+    intersperce ' ' (fmap renderPuzzleChar discovered)
+    ++ " Guessed so far: " ++ guessed
 
-freshPuzzle :: String -> Puzzle
-freshPuzzle word = Puzzle word (fmap (const Nothing) word) []
+newPuzzle :: String -> Puzzle
+newPuzzle word = Puzzle word (fmap (const Nothing) word) []
+
+isInWord :: Puzzle -> Char -> Bool
+isInWord (Puzzle word _ _) char = char `elem` word
+
+isPlayed :: Puzzle -> Char -> Bool
+isPlayed (Puzzle _ _ alreadyPlayed ) char = char `elem` alreadyPlayed
+
+renderPuzzleChar :: Maybe Char -> Char
+renderPuzzleChar Nothing = '_'
+renderPuzzleChar (Just char) = char
+
+fillInCharacter :: Puzzle -> Char -> Puzzle
+fillInCharacter (Puzzle word guessed played) char =
+  Puzzle word newGuessed (char : played)
+  where zipper playedNow wordChar blank =
+          if wordChar == playedNow
+          then Just wordChar
+          else blank
+        newFilledInSoFar = zipWith (zipper c) word guessed
+
