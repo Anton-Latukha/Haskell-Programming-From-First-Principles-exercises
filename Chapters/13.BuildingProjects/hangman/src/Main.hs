@@ -84,3 +84,10 @@ gameOver (Puzzle wordToGuess _ guessed) =
        putStrLn $ "The word was: " ++ wordToGuess
        exitSuccess
   else return ()
+
+gameWin :: Puzzle -> IO ()
+gameWin (Puzzle _ filledInSoFar _) =
+  if all isJust filledInSoFar then
+    do putStrLn "You win!"
+       exitSuccess
+  else return ()
