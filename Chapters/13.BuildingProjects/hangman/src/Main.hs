@@ -76,3 +76,11 @@ handleGuess puzzle guess = do
     (False, _) -> Do
       putStrLn "This character wasn't in the word, try again."
       return (fillInCharacter puzzle guess)
+
+gameOver :: Puzzle -> IO ()
+gameOver (Puzzle wordToGuess _ guessed) =
+  if (length guessed) > 9 then
+    do putStrLn "You lose!"
+       putStrLn $ "The word was: " ++ wordToGuess
+       exitSuccess
+  else return ()
