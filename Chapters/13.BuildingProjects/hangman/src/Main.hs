@@ -100,5 +100,12 @@ runGame puzzle = forever $ do
   putStr "Guess a letter: "
   guess <- getLine
   case guess of
-    [c] -> handleGuess Puxxle c >>= runGame
+    [c] -> handleGuess Puzzle c >>= runGame
     _   -> putStrLn "Your guess must be a single character"
+
+main :: IO ()
+main = do
+  word <- randomWord'
+  let puzzle =
+        freshPuzzle (fmap toLower word)
+  runGame puzzle
