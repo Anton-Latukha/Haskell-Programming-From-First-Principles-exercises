@@ -1,6 +1,6 @@
 module Chipher where
 
-import Data.Char
+import Data.Char (ord, chr)
 
 cipherCaesar :: String -> Int -> String
 cipherCaesar str n = map (\x -> chr (mod (ord x + n - 97) 26 + 97)) str
