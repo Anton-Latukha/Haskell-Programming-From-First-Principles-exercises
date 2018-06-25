@@ -91,3 +91,14 @@ gameWin (Puzzle _ filledInSoFar _) =
     do putStrLn "You win!"
        exitSuccess
   else return ()
+
+runGame :: Puzzle -> IO ()
+runGame puzzle = forever $ do
+  gameOver puzzle
+  gameWin puzzle
+  putStrLn $ "Current puzzle is: " ++ show puzzle
+  putStr "Guess a letter: "
+  guess <- getLine
+  case guess of
+    [c] -> handleGuess Puxxle c >>= runGame
+    _   -> putStrLn "Your guess must be a single character"
