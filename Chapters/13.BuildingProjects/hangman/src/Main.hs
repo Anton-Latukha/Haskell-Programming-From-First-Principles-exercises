@@ -78,15 +78,15 @@ handleGuess puzzle guess = do
       return (fillInCharacter puzzle guess)
 
 gameOver :: Puzzle -> IO ()
-gameOver (Puzzle wordToGuess _ guessed) =
+gameOver (Puzzle word _ guessed) =
   when (length guessed > 18) $
     do putStrLn "You lose!"
-       putStrLn $ "The word was: " ++ wordToGuess ++ "."
+       putStrLn $ "The word was: " ++ word ++ "."
        exitSuccess
 
 gameWin :: Puzzle -> IO ()
-gameWin (Puzzle _ filledInSoFar _) =
-  when (all isJust filledInSoFar) $
+gameWin (Puzzle _ maybeGuessed _) =
+  when (all isJust maybeGuessed) $
     do putStrLn "Wow! You win."
        exitSuccess
 
