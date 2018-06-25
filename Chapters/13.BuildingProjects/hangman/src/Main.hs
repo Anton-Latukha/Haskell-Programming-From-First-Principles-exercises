@@ -21,7 +21,7 @@ maxWordLength = 8
 gameWords :: IO WordList
 gameWords = filter gameLength <$> allWords
   where gameLength w =
-          let l = length (w ::string )
+          let l = length (w ::String)
           in     l >= minWordLength
               && l <  maxWordLength
 
@@ -38,7 +38,7 @@ data Puzzle =
 
 instance Show Puzzle where
   show (Puzzle _ discovered guessed) =
-    intersperce ' ' (fmap renderPuzzleChar discovered)
+    intersperse ' ' (fmap renderPuzzleChar discovered)
     ++ " Guessed so far: " ++ guessed
 
 newPuzzle :: String -> Puzzle
@@ -47,8 +47,8 @@ newPuzzle word = Puzzle word (fmap (const Nothing) word) []
 isInWord :: Puzzle -> Char -> Bool
 isInWord (Puzzle word _ _) char = char `elem` word
 
-isPlayed :: Puzzle -> Char -> Bool
-isPlayed (Puzzle _ _ alreadyPlayed ) char = char `elem` alreadyPlayed
+wasPlayed :: Puzzle -> Char -> Bool
+wasPlayed (Puzzle _ _ alreadyPlayed ) char = char `elem` alreadyPlayed
 
 renderPuzzleChar :: Maybe Char -> Char
 renderPuzzleChar Nothing = '_'
@@ -61,19 +61,19 @@ fillInCharacter (Puzzle word guessed played) char =
           if wordChar == playedNow
           then Just wordChar
           else blank
-        newFilledInSoFar = zipWith (zipper c) word guessed
+        newGuessed = zipWith (zipper char) word guessed
 
 handleGuess :: Puzzle -> Char -> IO Puzzle
 handleGuess puzzle guess = do
   putStrLn $ "Your guess was: " ++ [guess]
-  case (charInWord puzzle guess, alreadyGuessed puzzle guess) of
+  case (isInWord puzzle guess, wasPlayed puzzle guess) of
     (_, True) -> do
       putStrLn "You already guessed that character, pick something else!"
       return puzzle
     (True, _) -> do
       putStrLn "This character was in the word, filling in the word accordingly"
       return (fillInCharacter puzzle guess)
-    (False, _) -> Do
+    (False, _) -> do
       putStrLn "This character wasn't in the word, try again."
       return (fillInCharacter puzzle guess)
 
@@ -100,12 +100,12 @@ runGame puzzle = forever $ do
   putStr "Guess a letter: "
   guess <- getLine
   case guess of
-    [c] -> handleGuess Puzzle c >>= runGame
+    [char] -> handleGuess puzzle char >>= runGame
     _   -> putStrLn "Your guess must be a single character"
 
 main :: IO ()
 main = do
   word <- randomWord'
   let puzzle =
-        freshPuzzle (fmap toLower word)
+        newPuzzle (fmap toLower word)
   runGame puzzle
