@@ -26,3 +26,15 @@ ioUnCipherVigenere = do
   text <- getLine
   key <- getLine
   return (zipWith (\t k -> chr (mod (ord t + ord k) 32+64)) text (cycle key))
+
+ioCipherCaesar :: IO String
+ioCipherCaesar = do
+  str <- getLine
+  n <- getLine
+  return (map (\x -> chr (mod (ord x + (read n :: Int) - 97) 26 + 97)) str)
+
+ioUnChipherCaesar :: IO String
+ioUnChipherCaesar = do
+  str <- getLine
+  n <- getLine
+  return (map (\x -> chr (mod (ord x - (read n :: Int) - 97) 26 + 97)) str)
