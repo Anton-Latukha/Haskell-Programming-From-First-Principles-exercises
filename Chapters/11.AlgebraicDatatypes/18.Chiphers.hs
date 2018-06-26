@@ -14,3 +14,15 @@ cipherVigenere text key = zipWith (\t k -> chr (mod (ord t - ord k) 32+64)) text
 
 unCipherVigenere :: String -> String -> String
 unCipherVigenere text key = zipWith (\t k -> chr (mod (ord t + ord k) 32+64)) text (cycle key)
+
+ioCipherVigenere :: IO String
+ioCipherVigenere = do
+  text <- getLine
+  key <- getLine
+  return (zipWith (\t k -> chr (mod (ord t - ord k) 32+64)) text (cycle key))
+
+ioUnCipherVigenere :: IO String
+ioUnCipherVigenere = do
+  text <- getLine
+  key <- getLine
+  return (zipWith (\t k -> chr (mod (ord t + ord k) 32+64)) text (cycle key))
