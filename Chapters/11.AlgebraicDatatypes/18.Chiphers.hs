@@ -33,8 +33,8 @@ ioCipherCaesar = do
   n <- getLine
   return (map (\x -> chr (mod (ord x + (read n :: Int) - 97) 26 + 97)) str)
 
-ioUnChipherCaesar :: IO String
-ioUnChipherCaesar = do
+ioUnCipherCaesar :: IO String
+ioUnCipherCaesar = do
   str <- getLine
   n <- getLine
   return (map (\x -> chr (mod (ord x - (read n :: Int) - 97) 26 + 97)) str)
