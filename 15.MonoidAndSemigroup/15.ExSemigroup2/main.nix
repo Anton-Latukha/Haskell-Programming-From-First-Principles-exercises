@@ -6,7 +6,7 @@ let
 
   d = { mkDerivation, base, stdenv, base-unicode-symbols, containers-unicode-symbols, QuickCheck }:
     mkDerivation {
-      pname = "projectName";
+      pname = "semigroup2";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;
@@ -15,7 +15,7 @@ let
       executableHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols QuickCheck ];
       homepage = "blog.latukha.com";
       description = "Description text";
-      license = stdenv.lib.licenses.gpl2;
+      license = stdenv.lib.licenses.bsd3;
     };
 
   haskellPackages = if compiler == "default"

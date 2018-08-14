@@ -1,9 +1,9 @@
-name:                projectName
+name:                semigroup2
 version:             0.0.0.1
 synopsis:            Synopsis text
 description:         Description text
 homepage:            blog.latukha.com
-license:             GPLv2
+license:             BSDv3
 license-file:        LICENSE
 author:              Anton Latukha
 maintainer:          anton@latukha.com
