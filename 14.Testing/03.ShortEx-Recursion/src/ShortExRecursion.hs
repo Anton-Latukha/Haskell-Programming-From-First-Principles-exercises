@@ -5,19 +5,19 @@ rMult x 0 = 0
 rMult x y = x + rMult x (y - 1)
 
 main :: IO ()
-main = hspec $ do
+main = hspec $
   describe "Multiplication by recursion" $ do
-    it "0*0 should be 0" $ do
+    it "0*0 should be 0" $
       rMult 0 0 `shouldBe` 0
-    it "3*0 should be 0" $ do
+    it "3*0 should be 0" $
       rMult 3 0 `shouldBe` 0
-    it "0*3 should be 0" $ do
+    it "0*3 should be 0" $
       rMult 0 3 `shouldBe` 0
-    it "1*1 should be 1" $ do
+    it "1*1 should be 1" $
       rMult 1 1 `shouldBe` 1
-    it "4*1 should be 0" $ do
+    it "4*1 should be 0" $
       rMult 1 4 `shouldBe` 4
-    it "1*4 should be 0" $ do
+    it "1*4 should be 0" $
       rMult 4 1 `shouldBe` 4
-    it "69*72 should be 4968" $ do
+    it "69*72 should be 4968" $
       rMult 69 72 `shouldBe` 4968
