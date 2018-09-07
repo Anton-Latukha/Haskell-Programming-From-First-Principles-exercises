@@ -13,3 +13,9 @@ From GHC > 4.11, as in math, - Semigroup is a superclass of Monoid, inside langu
 \begin{code}
 import Data.Semigroup
 \end{code}
+
+Import a class for monoids (types with an associative binary operation that has an identity) with various general-purpose instances.
+
+\begin{code}
+import Data.Monoid
+\end{code}
