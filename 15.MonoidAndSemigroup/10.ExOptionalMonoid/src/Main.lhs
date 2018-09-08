@@ -28,7 +28,7 @@ data Optional a
   deriving (Eq, Show)
 \end{code}
 
-$\forall a in Monoid : Semigroup of 'Optional a' is$:
+$\forall a in Monoid : Semigroup of 'Optional a' is$
 
 \begin{code}
 instance Monoid a ⇒ Semigroup (Optional a) where
@@ -36,4 +36,11 @@ instance Monoid a ⇒ Semigroup (Optional a) where
   (<>) (Only a) Nada = Only ((<>) a mempty)
   (<>) Nada (Only b) = Only ((<>) mempty b)
   (<>) Nada Nada = Nada
+\end{code}
+
+After declaration of Semigroup for 'Optional a' - the only thing left is to point-out identity value.
+
+\begin{code}
+instance Monoid a ⇒ Monoid (Optional a) where
+  mempty = Nada
 \end{code}
