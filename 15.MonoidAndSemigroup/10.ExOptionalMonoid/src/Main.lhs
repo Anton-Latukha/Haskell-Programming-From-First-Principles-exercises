@@ -19,3 +19,21 @@ Import a class for monoids (types with an associative binary operation that has 
 \begin{code}
 import Data.Monoid
 \end{code}
+
+Asked datatype.
+\begin{code}
+data Optional a
+  = Nada
+  | Only a
+  deriving (Eq, Show)
+\end{code}
+
+$\forall a in Monoid : Semigroup of 'Optional a' is$:
+
+\begin{code}
+instance Monoid a ⇒ Semigroup (Optional a) where
+  (<>) (Only a) (Only b) = Only ((<>) a b)
+  (<>) (Only a) Nada = Only ((<>) a mempty)
+  (<>) Nada (Only b) = Only ((<>) mempty b)
+  (<>) Nada Nada = Nada
+\end{code}
