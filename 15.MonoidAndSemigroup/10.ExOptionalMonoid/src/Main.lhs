@@ -20,6 +20,12 @@ Import a class for monoids (types with an associative binary operation that has 
 import Data.Monoid
 \end{code}
 
+For check of specs.
+
+\begin{code}
+import Test.Hspec
+\end{code}
+
 Asked datatype.
 \begin{code}
 data Optional a
@@ -43,4 +49,21 @@ After declaration of Semigroup for 'Optional a' - the only thing left is to poin
 \begin{code}
 instance Monoid a ⇒ Monoid (Optional a) where
   mempty = Nada
+\end{code}
+
+
+\begin{code}
+main :: IO ()
+main = hspec $ do
+  describe "Check how Optional works:" $ do
+    it "Only (Sum 1) `mappend` Only (Sum 1) = Only (Sum {getSum = 2})" $ do
+      Only (Sum 1) `mappend` Only (Sum 1) `shouldBe` Only (Sum {getSum = 2})
+    it "Only (Product 4) `mappend` Only (Product 2) = Only (Product {getProduct = 8})" $ do
+      Only (Product 4) `mappend` Only (Product 2) `shouldBe` Only (Product {getProduct = 8})
+    it "Only (Sum 1) `mappend` Nada = Only (Sum {getSum = 1})" $ do
+      Only (Sum 1) `mappend` Nada `shouldBe` Only (Sum {getSum = 1})
+    it "Only [1] `mappend` Nada = Only [1]" $ do
+      Only [1] `mappend` Nada `shouldBe` Only [1]
+    it "Nada `mappend` Only (Sum 1) = Only (Sum {getSum = 1})" $ do
+      Nada `mappend` Only (Sum 1) `shouldBe` Only (Sum {getSum = 1})
 \end{code}
