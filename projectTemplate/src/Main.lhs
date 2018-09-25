@@ -2,5 +2,5 @@
 {-# LANGUAGE UnicodeSyntax #-}
 module ModuleName where
 
-main = print "Hello from main function!"
+main = print "Hello from the main function!"
 \end{code}

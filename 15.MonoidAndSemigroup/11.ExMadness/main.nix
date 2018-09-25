@@ -6,16 +6,16 @@ let
 
   d = { mkDerivation, base, stdenv }:
     mkDerivation {
-      pname = "projectName";
+      pname = "madness";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;
-      isExecutable = true;
+      isExecutable = false;
       libraryHaskellDepends = [ base ];
       executableHaskellDepends = [ base ];
       homepage = "blog.latukha.com";
-      description = "Description text";
-      license = stdenv.lib.licenses.gpl2;
+      description = "Basic mad lib";
+      license = stdenv.lib.licenses.bsd3;
     };
 
   haskellPackages = if compiler == "default"
