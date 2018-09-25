@@ -4,14 +4,14 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  d = { mkDerivation, base, stdenv }:
+  d = { mkDerivation, base, stdenv, base-unicode-symbols, containers-unicode-symbols, QuickCheck }:
     mkDerivation {
       pname = "betterLivingThroughQuickCheck";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;
       isExecutable = false;
-      libraryHaskellDepends = [ base ];
+      libraryHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols QuickCheck ];
       executableHaskellDepends = [ base ];
       homepage = "blog.latukha.com";
       description = "Description text";

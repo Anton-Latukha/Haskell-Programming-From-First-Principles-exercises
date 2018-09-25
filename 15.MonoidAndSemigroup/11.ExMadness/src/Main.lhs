@@ -20,6 +20,7 @@ madlibbin' e adv noun adj =
   adv <> " as he jumped into his car " <>
   noun <> " and drove off with his " <>
   adj <> " wife."
+
 \end{code}
 
 Now you’re going to refactor this code a bit! Rewrite it using
