@@ -4,15 +4,15 @@ let
 
   inherit (nixpkgs) pkgs;
 
-  d = { mkDerivation, base, stdenv, base-unicode-symbols, containers-unicode-symbols }:
+  d = { mkDerivation, base, stdenv, base-unicode-symbols, containers-unicode-symbols, QuickCheck }:
     mkDerivation {
-      pname = "projectName";
+      pname = "semigroup2";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;
       isExecutable = true;
-      libraryHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols ];
-      executableHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols ];
+      libraryHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols QuickCheck ];
+      executableHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols QuickCheck ];
       homepage = "blog.latukha.com";
       description = "Description text";
       license = stdenv.lib.licenses.gpl2;
