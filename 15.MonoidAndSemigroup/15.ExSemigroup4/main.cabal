@@ -1,0 +1,26 @@
+name:                semigroup4
+version:             0.0.0.1
+synopsis:            Synopsis text
+description:         Description text
+homepage:            blog.latukha.com
+license:             BSDv3
+license-file:        LICENSE
+author:              Anton Latukha
+maintainer:          anton@latukha.com
+copyright:           2018, Anton Latukha
+category:            CLI
+build-type:          Simple
+cabal-version:       >=2.2
+
+executable main
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.11 && < 5
+  other-modules:       otherModuleNames
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     otherModuleNames
+  default-language:    Haskell2010
+  build-depends:       base >= 4.11 && < 5
