@@ -19,7 +19,18 @@ Function that checks any binary function for associative law.
 propAssoc ∷ (Eq m) ⇒ (m → m → m) → m → m → m → Bool
 propAssoc f a b c = (f a (f b c)) ≡ (f (f a b) c)
 
-newtype Combine a b =
-Combine { unCombine :: (a -> b) }
+newtype TCombine t1 t2
+  = CCombine { unCombine ∷ (t1 → t2) }
+
+type TFuncAssoc t1 t2 t3
+  = (Fun t1 t2 → Fun t2 t3 → Fun t1 t3)
+  → Fun t1 t2
+  → Fun t2 t3
+  → Fun t1 t3
+  → Bool
+
+main ∷ IO ()
+main = do
+  quickCheck (propAssoc ∷ TFuncAssoc String String String)
 
 \end{code}
