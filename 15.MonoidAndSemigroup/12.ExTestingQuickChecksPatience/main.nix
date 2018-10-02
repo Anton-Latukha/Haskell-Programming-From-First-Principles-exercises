@@ -15,7 +15,7 @@ let
       executableHaskellDepends = [ base base-unicode-symbols containers-unicode-symbols QuickCheck ];
       homepage = "blog.latukha.com";
       description = "Testing patience of QuickCheck.";
-      license = stdenv.lib.licenses.gpl2;
+      license = stdenv.lib.licenses.bsd3;
     };
 
   haskellPackages = if compiler == "default"

@@ -1,16 +1,16 @@
-name:                projectName
-version:             0.0.0.1
-synopsis:            Synopsis text
-description:         Description text
-homepage:            blog.latukha.com
-license:             GPLv2
-license-file:        LICENSE
-author:              Anton Latukha
-maintainer:          anton@latukha.com
-copyright:           2018, Anton Latukha
-category:            CLI
-build-type:          Simple
-cabal-version:       >=2.2
+name:                  ExOptionalMonoid
+version:               0.0.0.1
+synopsis:              Synopsis text
+description:           Description text
+homepage:              http://haskellbook.com/
+license:               BSD3
+license-file:          LICENSE
+author:                Chris Allen, Julie Moronuki, Anton Latukha
+maintainer:            anton@latukha.com
+copyright:             Anton Latukha: 2018; Chris Allen: 2016-2018; Julie Moronuki: 2016-2018
+category:              Training
+build-type:            Simple
+cabal-version:         >=2.2
 
 executable main
   hs-source-dirs:      src
