@@ -7,17 +7,12 @@ module ModuleName where
 import Prelude.Unicode
 
 import Test.QuickCheck
-\end{code}
-
-Getting Sum/getSum from Semigroup
-\begin{code}
-import Data.Semigroup
 
 \end{code}
 Function that checks any binary function for associative law.
 \begin{code}
-prop_CompAssoc ∷ (Eq t1) ⇒ TComp t1 → TComp t1 → TComp t1 → t1 → Bool
-prop_CompAssoc f1 f2 f3 c =
+prop_TCompFuncAssoc ∷ (Eq t1) ⇒ TComp t1 → TComp t1 → TComp t1 → t1 → Bool
+prop_TCompFuncAssoc f1 f2 f3 c =
  unComp (f1 <> (f2 <> f3)) c ≡ unComp ((f1 <> f2) <> f3) c
 
 newtype TComp t1 = CComp { unComp ∷ t1 → t1 }
@@ -36,5 +31,5 @@ instance Show (TComp t1) where
 
 main ∷ IO ()
 main = do
-  quickCheck (prop_CompAssoc ∷ TComp Integer → TComp Integer → TComp Integer → Integer → Bool)
+  quickCheck (prop_TCompFuncAssoc ∷ TComp Integer → TComp Integer → TComp Integer → Integer → Bool)
 \end{code}
