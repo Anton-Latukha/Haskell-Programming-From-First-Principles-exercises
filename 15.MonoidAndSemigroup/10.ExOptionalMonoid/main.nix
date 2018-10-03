@@ -6,7 +6,7 @@ let
 
   d = { mkDerivation, base, stdenv, hspec }:
     mkDerivation {
-      pname = "projectName";
+      pname = "ExOptionalMonoid";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;

@@ -6,7 +6,7 @@ let
 
   d = { mkDerivation, base, stdenv }:
     mkDerivation {
-      pname = "madness";
+      pname = "ExMadness";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;

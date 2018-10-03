@@ -6,7 +6,7 @@ let
 
   d = { mkDerivation, base, stdenv, base-unicode-symbols, containers-unicode-symbols, QuickCheck }:
     mkDerivation {
-      pname = "semigroup7";
+      pname = "ExSemigroup7";
       version = "0.0.0.1";
       src = ./src;
       isLibrary = true;
