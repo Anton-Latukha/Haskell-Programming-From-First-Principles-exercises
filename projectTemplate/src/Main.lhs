@@ -1,7 +1,7 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ModuleName where
+module Main where
 
 import Prelude.Unicode
 
@@ -14,7 +14,7 @@ import FlexibleContexts
 import FlexibleInstances
 import InstanceSigs
 import MultiParamTypeClasses
-\end{code}
+\end{code}--
 
 \begin{code}
 
