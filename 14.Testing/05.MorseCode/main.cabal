@@ -1,0 +1,45 @@
+name:                  MorseCode
+version:               0.1.0.0
+synopsis:              Synopsis text
+homepage:              http://haskellbook.com/
+license:               BSD3
+license-file:          LICENSE
+author:                Chris Allen, Julie Moronuki, Anton Latukha
+maintainer:            anton@latukha.com
+copyright:             Anton Latukha: 2018; Chris Allen: 2016-2018; Julie Moronuki: 2016-2018
+category:              Training
+build-type:            Simple
+cabal-version:         >= 2.0
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Morse
+  ghc-options:         -Wall -fwarn-tabs
+  build-depends:       base >=4.11 && < 5
+                     , containers
+                     , QuickCheck
+  default-language:    Haskell2010
+  other-extensions:    UnicodeSyntax
+
+executable morse
+  main-is:             Main.lhs
+  other-extensions:    UnicodeSyntax
+  ghc-options:         -Wall -fwarn-tabs
+  hs-source-dirs:      src
+  build-depends:       base >= 4.11 && < 5
+                     , containers
+                     , QuickCheck
+  other-modules:       Morse
+  default-language:    Haskell2010
+
+test-suite tests
+  ghc-options:         -Wall -fno-warn-orphans
+  type:                exitcode-stdio-1.0
+  main-is:             tests.lhs
+  hs-source-dirs:      tests
+  build-depends:       base
+                     , containers
+                     , QuickCheck
+  other-modules:       Morse
+  default-language:    Haskell2010
+  other-extensions:    UnicodeSyntax
