@@ -1,3 +1,5 @@
+module Language where
+
 import Data.Char
 
 capitalizeWord :: String -> String
