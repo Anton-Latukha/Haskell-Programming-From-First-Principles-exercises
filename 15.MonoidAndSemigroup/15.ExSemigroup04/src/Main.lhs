@@ -1,7 +1,7 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ModuleName where
+module Main where
 
 import Prelude.Unicode
 

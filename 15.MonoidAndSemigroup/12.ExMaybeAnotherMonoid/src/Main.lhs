@@ -1,7 +1,7 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ModuleName where
+module Main where
 
 import Prelude.Unicode
 
@@ -22,7 +22,7 @@ Asked instance of First' without using Monoid properties of writing type.
 instance Semigroup (First' a) where
   (<>) (First' Nothing) b = b
   (<>) a (First' Nothing) = a
-  (<>) a b             = a
+  (<>) a b                = a
 \end{code}
 
 Acompanying Monoidal instance adding Identity value.

@@ -1,6 +1,6 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
-module Madness where
+module Main where
 
 import Data.Monoid
 

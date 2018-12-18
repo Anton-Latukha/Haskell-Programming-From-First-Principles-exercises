@@ -2,21 +2,15 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ModuleName where
+module Main where
 
 import Prelude.Unicode
 
 import Test.QuickCheck
-\end{code}
 
+\end{code}
 Function that checks any binary function for associative law.
 \begin{code}
-
-type TFuncAssoc f c = f → f → f → c → Bool
-
-prop_TCombineFuncAssoc ∷ (Eq b, Semigroup b) ⇒ TFuncAssoc (TCombine a b) a
-prop_TCombineFuncAssoc f g h c = unCombine ((f <> g) <> h) c ≡ unCombine (f <> (g <> h)) c
-
 newtype TCombine t1 t2
   = CCombine { unCombine ∷ (t1 → t2) }
 
@@ -30,6 +24,10 @@ instance (CoArbitrary t1, Arbitrary t2) ⇒ Arbitrary (TCombine t1 t2) where
   arbitrary = do
     f ← arbitrary
     return $ CCombine f
+
+type TFuncAssoc f c = f → f → f → c → Bool
+prop_TCombineFuncAssoc ∷ (Eq b, Semigroup b) ⇒ TFuncAssoc (TCombine a b) a
+prop_TCombineFuncAssoc f g h c = unCombine ((f <> g) <> h) c ≡ unCombine (f <> (g <> h)) c
 
 
 main ∷ IO ()

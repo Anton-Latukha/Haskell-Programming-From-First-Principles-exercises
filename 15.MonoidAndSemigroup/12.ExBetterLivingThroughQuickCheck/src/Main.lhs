@@ -1,7 +1,7 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module BetterLivingThroughQuickCheck where
+module Main where
 
 import Prelude.Unicode
 import Data.Monoid
@@ -18,5 +18,15 @@ monoidLeftIdentity a = mempty <> a ≡ a
 
 monoidRightIdentity ∷ (Eq m, Monoid m) ⇒ m → Bool
 monoidRightIdentity a = (a <> mempty) ≡ a
+
+type S = String
+type B = Bool
+type SB = S → S → S → B
+
+main ∷ IO ()
+main = do
+ quickCheck (monoidAssoc :: SB)
+ quickCheck (monoidLeftIdentity :: S → B)
+ quickCheck (monoidRightIdentity :: S → B)
 
 \end{code}

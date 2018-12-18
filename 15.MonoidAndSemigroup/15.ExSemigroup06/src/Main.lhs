@@ -2,7 +2,7 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ModuleName where
+module Main where
 
 import Prelude.Unicode
 
@@ -18,7 +18,7 @@ newtype BoolConj = BoolConj Bool
   deriving (Eq, Show)
 
 instance Semigroup BoolConj where
-  (<>) (BoolConj a)  (BoolConj b)  = BoolConj (a ∧ b)
+  (<>) (BoolConj a) (BoolConj b) = BoolConj (a ∧ b)
 
 instance Arbitrary BoolConj where
   arbitrary = do

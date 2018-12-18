@@ -1,11 +1,10 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module TestingQuickChecksPatience where
+module Main where
 
 import Prelude.Unicode
 import Data.Monoid
-import Data.Monoid.Unicode
 import Test.QuickCheck
 
 data Bull
@@ -42,7 +41,7 @@ main = do
   let ma = monoidAssoc
       mli = monoidLeftIdentity
       mri = monoidRightIdentity
-  quickCheck (ma ∷ BullMappend)
+  quickCheck (ma ∷ BullMappend )
   quickCheck (mli ∷ Bull → Bool)
   quickCheck (mri ∷ Bull → Bool)
 
