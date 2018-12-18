@@ -1,11 +1,11 @@
-{ mkDerivation, base, stdenv, unicode-prelude }:
+{ mkDerivation, base, QuickCheck, stdenv, unicode-prelude }:
 mkDerivation {
-  pname = "projectName";
-  version = "0.0.0.1";
+  pname = "ExSemigroup10";
+  version = "0.1.0.0";
   src = ./.;
   isLibrary = false;
   isExecutable = true;
-  executableHaskellDepends = [ base unicode-prelude ];
+  executableHaskellDepends = [ base QuickCheck unicode-prelude ];
   homepage = "http://haskellbook.com/";
   description = "Synopsis text";
   license = stdenv.lib.licenses.bsd3;
