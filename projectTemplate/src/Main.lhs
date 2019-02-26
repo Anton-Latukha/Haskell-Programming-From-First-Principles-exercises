@@ -18,5 +18,6 @@ import MultiParamTypeClasses
 
 \begin{code}
 
-main = print "Hello from the main function!"
+main ∷ IO ()
+main = print "a"
 \end{code}
