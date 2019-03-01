@@ -1,11 +1,11 @@
 \begin{code}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE UnicodeSyntax  #-}
 
 \end{code}
 
 Pragma enables to write type desctiptions and get more reasonable debugging msgs.
 \begin{code}
-{-# LANGUAGE InstanceSigs  #-}
+{-# LANGUAGE InstanceSigs   #-}
 
 module Main where
 
@@ -33,6 +33,20 @@ instance Semigroup (List a) where
 instance Monoid (List a) where
   mempty = Nil
 
+-- To test the List for according properties with Checkers & QuickCheck -
+-- Arbitrary must be implemented.
+-- To generate Lists of random length - leveraging QuickCheck possibilities for
+-- it. Using `sized` to provide the length of list, and we provide a builder of
+-- Lists (genSizedList) to generate them.
+instance (Arbitrary t) ⇒ Arbitrary (List t) where
+  arbitrary = sized genSizedList
+    where
+      genSizedList ∷ (Arbitrary t) ⇒ Int → Gen (List t)
+      genSizedList n =
+        if n ≤ 0
+        then return Nil
+        else Cons <$> arbitrary <*> genSizedList (n - 1)
+
 instance Functor List where
   fmap ∷ (a → b) → List a → List b
   fmap f Nil = Nil
@@ -52,8 +66,8 @@ fold ∷ (a → b → b) → b → List a → b
 fold _ b Nil = b
 fold f b (Cons h t) = f h (fold f b t)
 
-concat' ∷ List (List a) → List a
-concat' = fold append Nil
+-- concat' ∷ List (List a) → List a
+-- concat' = fold append Nil
 
 -- write this one in terms
 -- of concat' and fmap
@@ -64,8 +78,17 @@ concat' = fold append Nil
 f = Cons (+1) (Cons (*2) Nil)
 v = Cons 1 (Cons 2 Nil)
 
+-- Let's use Checkers lib
+-- And use the QuickCheck.Classes that already have properties for standard type classes
+-- From Classes we would use: applicative, functor, monoid, semigroup
+
+
+
+
 main ∷ IO ()
 main = do
   print (f <*> v)
-  quickBatch $ monoid (Cons "String" Nil)
+  quickBatch $ semigroup (undefined ∷ List String)
+  quickBatch $ monoid (undefined ∷ List String)
+
 \end{code}
