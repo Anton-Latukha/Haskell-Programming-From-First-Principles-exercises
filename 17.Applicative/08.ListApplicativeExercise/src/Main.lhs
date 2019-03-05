@@ -54,8 +54,10 @@ instance Functor List where
 
 instance Applicative List where
   pure x = Cons x Nil
+
   (<*>) ∷ List (t1 → t2) → List t1 → List t2
-  (<*>) (Cons f a) Nil = Nil
+  (<*>) _ Nil = Nil
+  (<*>) Nil _ = Nil
   (<*>) (Cons f Nil) (Cons a2 b2) = Cons (f a2) (f <$> b2)
   (<*>) (Cons f a1) (Cons a2 b2) = Cons (f a2) (f <$> b2) <> (a1 <*> Cons a2 b2)
 
