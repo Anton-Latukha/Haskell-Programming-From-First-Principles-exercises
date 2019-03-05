@@ -33,6 +33,27 @@ instance Semigroup (List a) where
 instance Monoid (List a) where
   mempty = Nil
 
+instance Functor List where
+  fmap ∷ (a → b) → List a → List b
+  fmap f Nil = Nil
+  fmap f (Cons x a) = Cons (f x) $ fmap f a
+
+instance Applicative List where
+  pure x = Cons x Nil
+  
+  -- Write a type signature to help yourself
+  (<*>) ∷ List (t1 → t2) → List t1 → List t2
+  (<*>) _ Nil = Nil
+  (<*>) Nil _ = Nil
+  -- If reminder of the functions list is Nil → skip the tail recursion.
+  (<*>) (Cons f Nil) (Cons a2 b2) = Cons (f a2) (f <$> b2)
+  -- But if there is function list → recurse over it.
+  (<*>) (Cons f a1) (Cons a2 b2) = Cons (f a2) (f <$> b2) <> (a1 <*> Cons a2 b2)
+
+-- Let's use Checkers lib
+-- And use the QuickCheck.Classes that already have properties for standard type classes
+-- From Classes we would use: applicative, functor, monoid, semigroup
+
 -- To test the List for according properties with Checkers & QuickCheck -
 -- Arbitrary must be implemented.
 -- To generate Lists of random length - leveraging QuickCheck possibilities for
@@ -46,20 +67,6 @@ instance (Arbitrary t) ⇒ Arbitrary (List t) where
         if n ≤ 0
         then return Nil
         else Cons <$> arbitrary <*> genSizedList (n - 1)
-
-instance Functor List where
-  fmap ∷ (a → b) → List a → List b
-  fmap f Nil = Nil
-  fmap f (Cons x a) = Cons (f x) $ fmap f a
-
-instance Applicative List where
-  pure x = Cons x Nil
-
-  (<*>) ∷ List (t1 → t2) → List t1 → List t2
-  (<*>) _ Nil = Nil
-  (<*>) Nil _ = Nil
-  (<*>) (Cons f Nil) (Cons a2 b2) = Cons (f a2) (f <$> b2)
-  (<*>) (Cons f a1) (Cons a2 b2) = Cons (f a2) (f <$> b2) <> (a1 <*> Cons a2 b2)
 
 instance Eq a ⇒ EqProp (List a) where
   (=-=) = eq
@@ -79,12 +86,6 @@ fold f b (Cons h t) = f h (fold f b t)
 
 f = Cons (+1) (Cons (*2) Nil)
 v = Cons 1 (Cons 2 Nil)
-
--- Let's use Checkers lib
--- And use the QuickCheck.Classes that already have properties for standard type classes
--- From Classes we would use: applicative, functor, monoid, semigroup
-
-
 
 
 main ∷ IO ()
