@@ -90,5 +90,11 @@ main = do
   print (f <*> v)
   quickBatch $ semigroup (undefined ∷ List String)
   quickBatch $ monoid (undefined ∷ List String)
+  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ List (String, String, String))
+  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ List (Integer, Integer, Integer))
+  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ List (Double, String, Bool))
+  quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ List (String, String, String))
+  quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ List (Integer, Integer, Integer))
+  quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ List (Double, String, Bool))
 
 \end{code}
