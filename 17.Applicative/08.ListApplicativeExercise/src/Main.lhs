@@ -38,9 +38,12 @@ instance Functor List where
   fmap f Nil = Nil
   fmap f (Cons x a) = Cons (f x) $ fmap f a
 
+-- Remember that applicative instances are not guaranteed to have unique
+-- implementation. Go from what Applicative needs to do.
+-- The most classic variant of Applicative should also use&give a free Functor.
 instance Applicative List where
   pure x = Cons x Nil
-  
+
   -- Write a type signature to help yourself
   (<*>) ∷ List (t1 → t2) → List t1 → List t2
   (<*>) _ Nil = Nil
@@ -71,18 +74,23 @@ instance (Arbitrary t) ⇒ Arbitrary (List t) where
 instance Eq a ⇒ EqProp (List a) where
   (=-=) = eq
 
+append ∷ List a → List a → List a
+append Nil ys = ys
+append (Cons x xs) ys = Cons x $ xs `append` ys
+
 fold ∷ (a → b → b) → b → List a → b
 fold _ b Nil = b
 fold f b (Cons h t) = f h (fold f b t)
 
--- concat' ∷ List (List a) → List a
--- concat' = fold append Nil
+concat' ∷ List (List a) → List a
+concat' = fold append Nil
 
 -- write this one in terms
 -- of concat' and fmap
 
--- flatMap ∷ (a → List b) → List a → List b
--- flatMap
+flatMap ∷ (a → List b) → List a → List b
+-- Seems - that is all to it.
+flatMap falistb (lista) = concat' $ fmap falistb lista
 
 f = Cons (+1) (Cons (*2) Nil)
 v = Cons 1 (Cons 2 Nil)
@@ -96,6 +104,8 @@ main = do
   quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ List (String, String, String))
   quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ List (Integer, Integer, Integer))
   quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ List (Double, String, Bool))
+  -- This one especially runs slow - somewhat too heavy bruteforcing of the creation of functions
+  -- But it gets the job done over couple of hours, and it tests that everything is right.
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ List (String, String, String))
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ List (Integer, Integer, Integer))
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ List (Double, String, Bool))
