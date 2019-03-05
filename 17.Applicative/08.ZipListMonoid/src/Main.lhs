@@ -13,7 +13,7 @@ import Test.QuickCheck.Classes
 
 \end{code}
 
-Arbitrary instances already existing in QuickCheck, sos code is not needed.a
+Arbitrary instances already existing in QuickCheck, so reducing the code.
 \begin{code}
 
 instance Semigroup a ⇒ Semigroup (ZipList a) where
