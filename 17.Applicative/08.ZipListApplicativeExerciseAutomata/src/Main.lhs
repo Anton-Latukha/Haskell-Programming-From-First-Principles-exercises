@@ -1,3 +1,7 @@
+Sorry book assignment. Here we seems to make a smarter move - and not reinvent
+the Applicative and all that it is needs, and since ZipList' is just a wrapper
+around List - we let GHC derive all instances from List.
+
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
