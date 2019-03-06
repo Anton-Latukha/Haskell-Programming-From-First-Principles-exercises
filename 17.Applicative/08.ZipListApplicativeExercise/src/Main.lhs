@@ -1,11 +1,14 @@
+In this exercise we asked to make implementation analogous to the already
+existing library code.
+
+So take a notice that we writing a bad crufty code here, even if for learning
+purposes.
+
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
 {-# LANGUAGE InstanceSigs   #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE UndecidableInstances #-}
-{-# LANGUAGE StandaloneDeriving #-}
 
 module Main where
 
@@ -61,9 +64,44 @@ take' n list = go n list Nil
     go _ Nil res = res
     go n (Cons a as) res = go (n-1) as (Cons a res)
 
+
+\end{code}
+What is ZipList?
+https://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html#t:ZipList
+```
+  newtype ZipList a
+  Lists, but with an Applicative functor based on zipping.
+```
+
+It is a type:
+newtype ZipList a = ZipList [a]
+that for monoidal operations uses monoid properties of 'a' inside the [].
+Or, as it is said in the book:
+ZipList [1, 2, 3] <> ZipList [4, 5, 6]
+-- changes to
+[
+1 <> 4
+, 2 <> 5
+, 3 <> 6
+]
+
+So ZipList monoid reacts to Applicative monoidal nature in a distinct manner.
+
+It is also hinted in the book. Watch-out for the difference Identity and Zero.
+And:
+```
+instance Monoid a => Monoid (ZipList a) where
+mempty = pure mempty
+mappend = liftA2 mappend
+
+Use this infrmoation to implement all this into ZipList'
+````
+
+Understanding the
+\begin{code}
+
 newtype ZipList' a = ZipList' (List a)
-  deriving (Eq, Show, Arbitrary)
--- deriving instance Arbitrary (List a) ⇒ Arbitrary (ZipList' a)
+  deriving (Eq, Show, Arbitrary, Semigroup, Monoid, Functor)
 
 instance Eq a ⇒ EqProp (ZipList' a) where
   xs =-= ys = xs' `eq` ys'
@@ -73,18 +111,18 @@ instance Eq a ⇒ EqProp (ZipList' a) where
       ys' = let (ZipList' l) = ys
         in take' 3000 l
 
-instance Functor ZipList' where
-  fmap ∷ (a → b) → ZipList' a → ZipList' b
-  fmap f (ZipList' as) = ZipList' $ f <$> as
+-- instance Functor ZipList' where
+--   fmap ∷ (a → b) → ZipList' a → ZipList' b
+--   fmap f (ZipList' as) = ZipList' $ f <$> as
+--   -- fmap f (ZipList' as) = ZipList' $ f <$> as
 
-instance Applicative ZipList' where
-  pure ∷ a → ZipList' a
-  pure as = ZipList' (Cons as Nil)
+-- instance Applicative ZipList' where
+--   pure ∷ a → ZipList' a
+--   pure as = ZipList' (Cons as Nil)
 
-  (<*>) ∷ ZipList' (a → b) → ZipList' a → ZipList' b
-  (<*>) (ZipList' Nil) _ = ZipList' Nil
-  (<*>) _ (ZipList' Nil) = ZipList' Nil
-  (<*>) (ZipList' (Cons f fs)) (ZipList' (Cons a as)) = ZipList' (Cons (f a) (fs <*> as))
+--   (<*>) ∷ ZipList' (a → b) → ZipList' a → ZipList' b
+--   (<*>) _ (ZipList' Nil) = ZipList' Nil
+--   (<*>) (ZipList' (Cons f fs)) (ZipList' (Cons a as)) = ZipList' (Cons (f a) (fs <*> as))
 
 main ∷ IO ()
 main = do
