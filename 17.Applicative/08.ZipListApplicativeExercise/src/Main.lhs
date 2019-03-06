@@ -58,6 +58,7 @@ take' ∷ Int → List a → List a
 take' n list = go n list Nil
   where
     go 0 _ res = res
+    go _ Nil res = res
     go n (Cons a as) res = go (n-1) as (Cons a res)
 
 newtype ZipList' a = ZipList' (List a)
@@ -81,6 +82,8 @@ instance Applicative ZipList' where
   pure as = ZipList' (Cons as Nil)
 
   (<*>) ∷ ZipList' (a → b) → ZipList' a → ZipList' b
+  (<*>) (ZipList' Nil) _ = ZipList' Nil
+  (<*>) _ (ZipList' Nil) = ZipList' Nil
   (<*>) (ZipList' (Cons f fs)) (ZipList' (Cons a as)) = ZipList' (Cons (f a) (fs <*> as))
 
 main ∷ IO ()
