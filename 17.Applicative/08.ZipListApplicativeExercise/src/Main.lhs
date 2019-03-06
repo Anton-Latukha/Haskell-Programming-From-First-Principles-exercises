@@ -18,7 +18,6 @@ import Test.QuickCheck.Checkers
 data List t = Nil | Cons t (List t)
   deriving (Eq, Show)
 
-
 instance Semigroup (List a) where
   (<>) ∷ List a → List a → List a
   (<>) a Nil = a
@@ -42,6 +41,19 @@ instance Applicative List where
   (<*>) (Cons f Nil) (Cons a2 b2) = Cons (f a2) (f <$> b2)
   (<*>) (Cons f a1) (Cons a2 b2) = Cons (f a2) (f <$> b2) <> (a1 <*> Cons a2 b2)
 
+instance (Arbitrary t) ⇒ Arbitrary (List t) where
+  arbitrary = sized genSizedList
+    where
+      genSizedList ∷ (Arbitrary t) ⇒ Int → Gen (List t)
+      genSizedList n =
+        if n ≤ 0
+        then return Nil
+        else Cons <$> arbitrary <*> genSizedList (n - 1)
+
+instance Eq a ⇒ EqProp (List a) where
+  (=-=) = eq
+
+
 take' ∷ Int → List a → List a
 take' n list = go n list Nil
   where
@@ -49,8 +61,8 @@ take' n list = go n list Nil
     go n (Cons a as) res = go (n-1) as (Cons a res)
 
 newtype ZipList' a = ZipList' (List a)
-  deriving (Eq, Show)
-deriving instance Arbitrary (List a) ⇒ Arbitrary (ZipList' a)
+  deriving (Eq, Show, Arbitrary)
+-- deriving instance Arbitrary (List a) ⇒ Arbitrary (ZipList' a)
 
 instance Eq a ⇒ EqProp (ZipList' a) where
   xs =-= ys = xs' `eq` ys'
