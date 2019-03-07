@@ -136,6 +136,16 @@ instance Applicative ZipList' where
     where
       go a = Cons a (go a)
 
+\end{code}
+
+ZipList' is essentially a special [].
+
+What <*> should do in it?
+go:
+  [] <*> _ = []
+  _ <*> [] = []
+  f:fs <*> a:as = (f a):(go fs as)
+\begin{code}
 main ∷ IO ()
 main = do
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ ZipList' (String, String, String))
