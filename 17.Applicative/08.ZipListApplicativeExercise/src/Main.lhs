@@ -130,6 +130,12 @@ Solution to the Applicative implemented using the `go` pattern,
 which become here vital to us.
 \begin{code}
 
+instance Applicative ZipList' where
+  pure ∷ a → ZipList' a
+  pure a = ZipList' (go a)
+    where
+      go a = Cons a (go a)
+
 main ∷ IO ()
 main = do
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ ZipList' (String, String, String))
