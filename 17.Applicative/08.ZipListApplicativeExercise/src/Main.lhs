@@ -156,6 +156,9 @@ go:
 
 main ∷ IO ()
 main = do
+  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ ZipList' (String, String, String))
+  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ ZipList' (Integer, Integer, Integer))
+  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ ZipList' (Double, String, Bool))
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ ZipList' (String, String, String))
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ ZipList' (Integer, Integer, Integer))
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ ZipList' (Double, String, Bool))
