@@ -146,6 +146,14 @@ go:
   _ <*> [] = []
   f:fs <*> a:as = (f a):(go fs as)
 \begin{code}
+  (<*>) ∷ ZipList' (a → b) → ZipList' a → ZipList' b
+  (<*>) (ZipList' ab) (ZipList' a) = ZipList' (go ab a)
+    where
+      go ∷ List (a → b) → List a → List b
+      go Nil _ = Nil
+      go _ Nil = Nil
+      go (Cons f fs) (Cons a as) = (Cons (f a) (go fs as))
+
 main ∷ IO ()
 main = do
   quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ ZipList' (String, String, String))
