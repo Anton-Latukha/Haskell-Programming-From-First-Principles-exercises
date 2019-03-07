@@ -110,10 +110,9 @@ instance Eq a ⇒ EqProp (ZipList' a) where
       ys' = let (ZipList' l) = ys
         in take' 3000 l
 
--- instance Functor ZipList' where
---   fmap ∷ (a → b) → ZipList' a → ZipList' b
---   fmap f (ZipList' as) = ZipList' $ f <$> as
---   -- fmap f (ZipList' as) = ZipList' $ f <$> as
+instance Functor ZipList' where
+  fmap ∷ (a → b) → ZipList' a → ZipList' b
+  fmap f (ZipList' as) = ZipList' $ f <$> as
 
 -- instance Applicative ZipList' where
 --   pure ∷ a → ZipList' a
