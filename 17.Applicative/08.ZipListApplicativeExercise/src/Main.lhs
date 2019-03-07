@@ -114,13 +114,21 @@ instance Functor ZipList' where
   fmap ∷ (a → b) → ZipList' a → ZipList' b
   fmap f (ZipList' as) = ZipList' $ f <$> as
 
--- instance Applicative ZipList' where
---   pure ∷ a → ZipList' a
---   pure as = ZipList' (Cons as Nil)
+\end{code}
 
---   (<*>) ∷ ZipList' (a → b) → ZipList' a → ZipList' b
---   (<*>) _ (ZipList' Nil) = ZipList' Nil
---   (<*>) (ZipList' (Cons f fs)) (ZipList' (Cons a as)) = ZipList' (Cons (f a) (fs <*> as))
+Well, here you meet an alian form of life.
+Due to us changing the rules of the game.
+Applicative Identity law states:
+```
+pure id <*> x ≡ x
+```
+That means that:
+pure id <*> (ZipList' (Cons "\1012390\1098239" (Cons "" Nil)))
+ = ZipList' (Cons "\1012390\1098239" (Cons "" Nil))
+
+Solution to the Applicative implemented using the `go` pattern,
+which become here vital to us.
+\begin{code}
 
 main ∷ IO ()
 main = do
