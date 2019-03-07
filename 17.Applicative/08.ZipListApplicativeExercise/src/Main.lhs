@@ -94,14 +94,13 @@ instance Monoid a => Monoid (ZipList a) where
 mempty = pure mempty
 mappend = liftA2 mappend
 
-Use this infrmoation to implement all this into ZipList'
+Use this information to implement all this into ZipList'
 ````
 
-Understanding the
 \begin{code}
 
 newtype ZipList' a = ZipList' (List a)
-  deriving (Eq, Show, Arbitrary, Semigroup, Monoid, Functor)
+  deriving (Eq, Show, Arbitrary)
 
 instance Eq a ⇒ EqProp (ZipList' a) where
   xs =-= ys = xs' `eq` ys'
