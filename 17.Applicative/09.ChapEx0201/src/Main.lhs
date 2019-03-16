@@ -1,6 +1,7 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE InstanceSigs #-}
+
 \end{code}
 
 Since Applicative requires Funtor - reusing the code from the Functor chapter.
@@ -34,14 +35,27 @@ instance Arbitrary a ⇒ Arbitrary (Pair a) where
 instance Eq a ⇒ EqProp (Pair a) where
   (=-=) = eq
 
+u = undefined
+
+type S = String
+type I = Integer
+type B = Bool
+type Pair3 a = Pair (a, a, a)
+
+quickie ∷ t → (t → TestBatch) → IO ()
+quickie t f = quickBatch $ f u
+
 main = do
-  print "a"
-  quickBatch $ functor (undefined ∷ Pair (String, String, String))
-  quickBatch $ functor (undefined ∷ Pair (String, String, String))
-  -- quickCheck (prop_functorId' ∷ Pair String → Bool)
-  -- quickCheck (prop_functorId' ∷ Pair Integer → Bool)
-  -- quickCheck (prop_functorCompose' ∷ Pair String → Fun String String → Fun String String → Bool)
-  -- quickCheck (prop_functorCompose' ∷ Pair String → Fun String Integer → Fun Integer String → Bool)
-  -- quickCheck (prop_functorCompose' ∷ Pair Integer → Fun Integer Integer → Fun Integer Integer → Bool)
-  -- quickCheck (prop_functorCompose' ∷ Pair Integer → Fun Integer String → Fun String Integer → Bool)
+  quickie (u ∷ Pair3 S) functor
+  quickie (u ∷ Pair3 I) functor
+  quickie (u ∷ Pair3 B) functor
+  quickie (u ∷ Pair (S, I, S)) functor
+  quickie (u ∷ Pair (I, S, I)) functor
+  quickie (u ∷ Pair (S, I, B)) functor
+  quickie (u ∷ Pair3 S) applicative
+  quickie (u ∷ Pair3 I) applicative
+  quickie (u ∷ Pair3 B) applicative
+  quickie (u ∷ Pair (S, I, S)) applicative
+  quickie (u ∷ Pair (I, S, I)) applicative
+  quickie (u ∷ Pair (S, I, B)) applicative
 \end{code}
