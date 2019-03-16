@@ -5,6 +5,10 @@ module Main where
 
 import Prelude.Unicode
 
+\end{code}
+
+Quantifying QuickCkeck because inside it already exists `Success` constructor
+\begin{code}
 import Test.QuickCheck (Arbitrary, arbitrary, oneof)
 import Test.QuickCheck.Classes
 import Test.QuickCheck.Checkers
@@ -54,10 +58,10 @@ quickie t f = quickBatch $ f u
 main ∷ IO ()
 main = do
   quickie (u ∷ (String, String, String)) functor
-  quickBatch $ functor (undefined ∷ Validation String (String, String, String))
-  quickBatch $ functor (undefined ∷ Validation String (Integer, Integer, Integer))
-  quickBatch $ functor (undefined ∷ Validation String (Double, String, Bool))
-  quickBatch $ applicative (undefined ∷ Validation String (String, String, String))
-  quickBatch $ applicative (undefined ∷ Validation String (Integer, Integer, Integer))
-  quickBatch $ applicative (undefined ∷ Validation String (Double, String, Bool))
+  quickie (u ∷ (String, String, String)) functor
+  quickie (u ∷ (Integer, Integer, Integer)) functor
+  quickie (u ∷ (Double, String, Bool)) functor
+  quickie (u ∷ (String, String, String)) applicative
+  quickie (u ∷ (Integer, Integer, Integer)) applicative
+  quickie (u ∷ (Double, String, Bool)) applicative
 \end{code}
