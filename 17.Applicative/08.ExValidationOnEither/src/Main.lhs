@@ -7,7 +7,7 @@ import Prelude.Unicode
 
 \end{code}
 
-Quantifying QuickCkeck because inside it already exists `Success` constructor
+Inside QuickCkeck already exists `Success` constructor, quintifying.
 \begin{code}
 import Test.QuickCheck (Arbitrary, arbitrary, oneof)
 import Test.QuickCheck.Classes
@@ -40,8 +40,6 @@ instance (Arbitrary e, Arbitrary a) ⇒ Arbitrary (Validation e a)
 
 instance (Eq e, Eq a) ⇒ EqProp (Validation e a) where
   (=-=) = eq
-  -- (Failure e1) =-= (Failure e2) = e1 `eq` e2
-  -- (Success a1) =-= (Success a2) = a1 `eq` a2
 
 \end{code}
 
