@@ -44,14 +44,16 @@ instance (Eq e, Eq a) ⇒ EqProp (Validation e a) where
 Let's abstract over quckBatch list a bit.
 \begin{code}
 
+u = undefined
+
 type ErrStr = Validation String
 
 quickie ∷ t → (ErrStr t → TestBatch) → IO ()
-quickie t f = quickBatch $ f undefined
+quickie t f = quickBatch $ f u
 
 main ∷ IO ()
 main = do
-  quickie (undefined ∷ (String, String, String)) functor
+  quickie (u ∷ (String, String, String)) functor
   quickBatch $ functor (undefined ∷ Validation String (String, String, String))
   quickBatch $ functor (undefined ∷ Validation String (Integer, Integer, Integer))
   quickBatch $ functor (undefined ∷ Validation String (Double, String, Bool))
