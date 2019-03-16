@@ -1,6 +1,10 @@
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
+\end{code}
+
+Would allow us to provide instance method types.
+\begin{code}
 {-# LANGUAGE InstanceSigs #-}
 
 module Main where
