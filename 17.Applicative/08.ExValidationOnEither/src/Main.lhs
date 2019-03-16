@@ -44,10 +44,10 @@ instance (Eq e, Eq a) ⇒ EqProp (Validation e a) where
 
 main ∷ IO ()
 main = do
-  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ Validation String (String, String, String))
-  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ Validation String (Integer, Integer, Integer))
-  quickBatch $ functor (undefined (undefined, undefined, undefined) ∷ Validation String (Double, String, Bool))
-  quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ Validation String (String, String, String))
-  quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ Validation String (Integer, Integer, Integer))
-  quickBatch $ applicative (undefined (undefined, undefined, undefined) ∷ Validation String (Double, String, Bool))
+  quickBatch $ functor (undefined ∷ Validation String (String, String, String))
+  quickBatch $ functor (undefined ∷ Validation String (Integer, Integer, Integer))
+  quickBatch $ functor (undefined ∷ Validation String (Double, String, Bool))
+  quickBatch $ applicative (undefined ∷ Validation String (String, String, String))
+  quickBatch $ applicative (undefined ∷ Validation String (Integer, Integer, Integer))
+  quickBatch $ applicative (undefined ∷ Validation String (Double, String, Bool))
 \end{code}
