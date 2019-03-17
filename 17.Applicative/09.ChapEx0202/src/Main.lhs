@@ -16,11 +16,11 @@ data Two a b = Two a b
 instance Functor (Two a) where
   fmap f (Two a b) = Two a (f b)
 
-instance Applicative (Two a) where
+instance Monoid a ⇒ Applicative (Two a) where
   pure ∷ b → Two a b
-  pure a = undefined
+  pure a = Two mempty a
   (<*>) ∷ Two a (b → c) → Two a b → Two a c
-  (<*>) f a = undefined
+  (<*>) (Two a1 f) (Two a2 b2) = Two (a1 <> a2) (f b2)
 
 instance (Arbitrary a, Arbitrary b) ⇒ Arbitrary (Two a b) where
   arbitrary = do
@@ -36,22 +36,22 @@ u = undefined
 type S = String
 type I = Integer
 type B = Bool
-type Two3 a b = Two a (b, b, b)
+type Two3 b = Two S (b, b, b)
 
 quickie ∷ t → (t → TestBatch) → IO ()
 quickie t f = quickBatch $ f u
 
 main = do
-  quickie (u ∷ Two3 S S) functor
-  quickie (u ∷ Two3 I I) functor
-  quickie (u ∷ Two3 B B) functor
-  quickie (u ∷ Two B (S, I, S)) functor
-  quickie (u ∷ Two B (I, S, I)) functor
+  quickie (u ∷ Two3 S) functor
+  quickie (u ∷ Two3 I) functor
+  quickie (u ∷ Two3 B) functor
+  quickie (u ∷ Two S (S, I, S)) functor
+  quickie (u ∷ Two S (I, S, I)) functor
   quickie (u ∷ Two S (S, I, B)) functor
-  quickie (u ∷ Two3 I S) applicative
-  quickie (u ∷ Two3 S I) applicative
-  quickie (u ∷ Two3 S B) applicative
-  quickie (u ∷ Two B (S, I, S)) applicative
-  quickie (u ∷ Two B (I, S, I)) applicative
-  quickie (u ∷ Two I (S, I, B)) applicative
+  quickie (u ∷ Two3 S) applicative
+  quickie (u ∷ Two3 I) applicative
+  quickie (u ∷ Two3 B) applicative
+  quickie (u ∷ Two S (S, I, S)) applicative
+  quickie (u ∷ Two S (I, S, I)) applicative
+  quickie (u ∷ Two S (S, I, B)) applicative
 \end{code}
