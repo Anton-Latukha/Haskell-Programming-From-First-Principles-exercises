@@ -10,25 +10,25 @@ import Test.QuickCheck
 import Test.QuickCheck.Classes
 import Test.QuickCheck.Checkers
 
-data Two a b = Two a b
+data Two c b = Two c b
   deriving (Eq, Show)
 
-instance Functor (Two a) where
-  fmap f (Two a b) = Two a (f b)
+instance Functor (Two c) where
+  fmap f (Two c a) = Two c (f a)
 
-instance Monoid a ⇒ Applicative (Two a) where
-  pure ∷ b → Two a b
+instance (Monoid c) ⇒ Applicative (Two c) where
+  pure ∷ a → Two c a
   pure a = Two mempty a
-  (<*>) ∷ Two a (b → c) → Two a b → Two a c
-  (<*>) (Two a1 f) (Two a2 b2) = Two (a1 <> a2) (f b2)
+  (<*>) ∷ Two c (a → b) → Two c a → Two c b
+  (<*>) (Two c1 f) (Two c2 b2) = Two (c1 <> c2) (f b2)
 
-instance (Arbitrary a, Arbitrary b) ⇒ Arbitrary (Two a b) where
+instance (Arbitrary c, Arbitrary a) ⇒ Arbitrary (Two c a) where
   arbitrary = do
+    c ← arbitrary
     a ← arbitrary
-    b ← arbitrary
-    return (Two a b)
+    return (Two c a)
 
-instance (Eq a, Eq b) ⇒ EqProp (Two a b) where
+instance (Eq c, Eq a) ⇒ EqProp (Two c a) where
   (=-=) = eq
 
 u = undefined
@@ -36,7 +36,7 @@ u = undefined
 type S = String
 type I = Integer
 type B = Bool
-type Two3 b = Two S (b, b, b)
+type Two3 a = Two S (a, a, a)
 
 quickie ∷ t → (t → TestBatch) → IO ()
 quickie t f = quickBatch $ f u
