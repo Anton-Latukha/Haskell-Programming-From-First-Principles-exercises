@@ -38,7 +38,7 @@ u = undefined
 type S = String
 type I = Integer
 type B = Bool
-type Four3 a = Four S [Int] S (a, a, a)
+type Four3 a = Four (S, [Int]) (S, [Int]) (S, [Int]) (a, a, a)
 
 quickie ∷ t → (t → TestBatch) → IO ()
 quickie t f = quickBatch $ f u
@@ -47,13 +47,7 @@ main = do
   quickie (u ∷ Four3 S) functor
   quickie (u ∷ Four3 I) functor
   quickie (u ∷ Four3 B) functor
-  quickie (u ∷ Four S S S (S, I, S)) functor
-  quickie (u ∷ Four S S S (I, S, I)) functor
-  quickie (u ∷ Four S S S (S, I, B)) functor
   quickie (u ∷ Four3 S) applicative
   quickie (u ∷ Four3 I) applicative
   quickie (u ∷ Four3 B) applicative
-  quickie (u ∷ Four S S S (S, I, S)) applicative
-  quickie (u ∷ Four S S S (I, S, I)) applicative
-  quickie (u ∷ Four S S S (S, I, B)) applicative
 \end{code}
