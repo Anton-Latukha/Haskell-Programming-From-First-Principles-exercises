@@ -37,7 +37,7 @@ u = undefined
 type S = String
 type I = Integer
 type B = Bool
-type Three'3 a = Three' S (a, a, a)
+type Three'3 a = Three' (S, [I]) (a, a, a)
 
 quickie ∷ t → (t → TestBatch) → IO ()
 quickie t f = quickBatch $ f u

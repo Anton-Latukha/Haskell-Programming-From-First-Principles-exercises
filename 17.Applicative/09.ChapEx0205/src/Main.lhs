@@ -38,7 +38,7 @@ u = undefined
 type S = String
 type I = Integer
 type B = Bool
-type Four3 a = Four (S, [Int]) (S, [Int]) (S, [Int]) (a, a, a)
+type Four3 a = Four (S, [I]) (S, [I]) (S, [I]) (a, a, a)
 
 quickie ∷ t → (t → TestBatch) → IO ()
 quickie t f = quickBatch $ f u
