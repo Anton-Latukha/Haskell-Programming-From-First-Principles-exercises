@@ -45,13 +45,7 @@ main = do
   quickie (u ∷ Two3 S) functor
   quickie (u ∷ Two3 I) functor
   quickie (u ∷ Two3 B) functor
-  quickie (u ∷ Two S (S, I, S)) functor
-  quickie (u ∷ Two S (I, S, I)) functor
-  quickie (u ∷ Two S (S, I, B)) functor
   quickie (u ∷ Two3 S) applicative
   quickie (u ∷ Two3 I) applicative
   quickie (u ∷ Two3 B) applicative
-  quickie (u ∷ Two S (S, I, S)) applicative
-  quickie (u ∷ Two S (I, S, I)) applicative
-  quickie (u ∷ Two S (S, I, B)) applicative
 \end{code}
