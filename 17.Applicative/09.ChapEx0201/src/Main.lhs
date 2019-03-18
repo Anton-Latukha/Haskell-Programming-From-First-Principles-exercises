@@ -49,13 +49,7 @@ main = do
   quickie (u ∷ Pair3 S) functor
   quickie (u ∷ Pair3 I) functor
   quickie (u ∷ Pair3 B) functor
-  quickie (u ∷ Pair (S, I, S)) functor
-  quickie (u ∷ Pair (I, S, I)) functor
-  quickie (u ∷ Pair (S, I, B)) functor
   quickie (u ∷ Pair3 S) applicative
   quickie (u ∷ Pair3 I) applicative
   quickie (u ∷ Pair3 B) applicative
-  quickie (u ∷ Pair (S, I, S)) applicative
-  quickie (u ∷ Pair (I, S, I)) applicative
-  quickie (u ∷ Pair (S, I, B)) applicative
 \end{code}
