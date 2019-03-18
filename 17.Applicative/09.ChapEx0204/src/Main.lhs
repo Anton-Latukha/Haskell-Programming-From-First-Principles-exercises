@@ -46,13 +46,7 @@ main = do
   quickie (u ∷ Three'3 S) functor
   quickie (u ∷ Three'3 I) functor
   quickie (u ∷ Three'3 B) functor
-  quickie (u ∷ Three' S (S, I, S)) functor
-  quickie (u ∷ Three' S (I, S, I)) functor
-  quickie (u ∷ Three' S (S, I, B)) functor
   quickie (u ∷ Three'3 S) applicative
   quickie (u ∷ Three'3 I) applicative
   quickie (u ∷ Three'3 B) applicative
-  quickie (u ∷ Three' S (S, I, S)) applicative
-  quickie (u ∷ Three' S (I, S, I)) applicative
-  quickie (u ∷ Three' S (S, I, B)) applicative
 \end{code}
