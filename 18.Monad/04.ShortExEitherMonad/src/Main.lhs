@@ -63,7 +63,6 @@ instance (Arbitrary a, Arbitrary b) ⇒ Arbitrary (Sum a b) where
     b ← arbitrary
     oneof [return (First a), return (Second b)]
 
-
 instance (Eq a, Eq b) ⇒ EqProp (Sum a b) where
   (=-=) = eq
 
