@@ -1,7 +1,7 @@
 { mkDerivation, base, checkers, QuickCheck, stdenv, unicode-prelude
 }:
 mkDerivation {
-  pname = "05BadMonadsAndThierDenizens";
+  pname = "05BadMonadsAndThierDenizens02";
   version = "0.1.0.0";
   src = ./.;
   isLibrary = false;
