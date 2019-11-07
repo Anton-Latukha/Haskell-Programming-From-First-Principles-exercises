@@ -9,6 +9,10 @@ import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
 
+newtype Compose f g a
+  = Compose { getCompose :: f (g a) }
+  deriving (Eq, Show)
+
 instance (Applicative f, Applicative g) ⇒ Applicative (Compose f g)
  where
   pure ∷ a → Compose f g a
