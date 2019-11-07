@@ -5,6 +5,9 @@
 module Twinplicative where
 
 import Prelude.Unicode
+import Test.QuickCheck
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
 
 instance (Applicative f, Applicative g) ⇒ Applicative (Compose f g)
  where
@@ -19,5 +22,5 @@ instance (Applicative f, Applicative g) ⇒ Applicative (Compose f g)
 \end{code}
 \begin{code}
 main ∷ IO ()
-main = print "a"
+main = quichBatch $ applicative (Compose [Just "string"])
 \end{code}
