@@ -34,5 +34,5 @@ instance (Applicative f, Applicative g)
 \end{code}
 \begin{code}
 main ∷ IO ()
-main = quichBatch $ applicative (Compose [Just "string"])
+main = quickBatch $ applicative (Compose [Just (1 ∷ Integer, True, "string")])
 \end{code}
