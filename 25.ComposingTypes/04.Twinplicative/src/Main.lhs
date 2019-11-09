@@ -31,21 +31,22 @@ instance (Applicative f, Applicative g)
        → Compose f g b
   (Compose f) <*> (Compose a) = Compose (liftA2 (<*>) f a)
 
-instance (
-  Arbitrary f
-  , Arbitrary g, CoArbitrary g
-  , Arbitrary a, CoArbitrary a
-  )
-  ⇒ Arbitrary (Compose f g a)
- where
-  arbitrary = do
-    a ← arbitrary
-    g ← coarbitrary a
-    f ← coarfitrary g
-    pure Compose f g a
+-- TODO: Finish the arbitary and coarbitrary instance some day
+-- instance (
+--   Arbitrary c
+--   , Arbitrary b, CoArbitrary b
+--   , Arbitrary a, CoArbitrary a
+--   )
+--   ⇒ Arbitrary (Compose (→ c) (→ b) a)
+--  where
+--   arbitrary = do
+--     a ← arbitrary
+--     g ← coarbitrary a
+--     f ← coarfitrary g
+--     pure $ Compose $ f (g a)
 
 \end{code}
 \begin{code}
-main ∷ IO ()
-main = quickBatch $ applicative (Compose [Just (1 ∷ Integer, True, "string")])
+-- main ∷ IO ()
+-- main = quickBatch $ applicative (Compose [Just (1 ∷ Integer, True, "string")])
 \end{code}
