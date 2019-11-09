@@ -32,7 +32,7 @@ instance (Applicative f, Applicative g)
   (Compose f) <*> (Compose a) = Compose (liftA2 (<*>) f a)
 
 instance (
-  Arbitrary f,
+  Arbitrary f
   , Arbitrary g, CoArbitrary g
   , Arbitrary a, CoArbitrary a
   )
