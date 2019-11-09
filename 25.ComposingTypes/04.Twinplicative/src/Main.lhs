@@ -31,6 +31,19 @@ instance (Applicative f, Applicative g)
        → Compose f g b
   (Compose f) <*> (Compose a) = Compose (liftA2 (<*>) f a)
 
+instance (
+  Arbitrary f,
+  , Arbitrary g, CoArbitrary g
+  , Arbitrary a, CoArbitrary a
+  )
+  ⇒ Arbitrary (Compose f g a)
+ where
+  arbitrary = do
+    a ← arbitrary
+    g ← coarbitrary a
+    f ← coarfitrary g
+    pure Compose f g a
+
 \end{code}
 \begin{code}
 main ∷ IO ()
