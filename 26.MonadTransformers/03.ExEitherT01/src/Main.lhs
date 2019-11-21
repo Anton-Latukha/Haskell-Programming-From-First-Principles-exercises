@@ -1,5 +1,6 @@
 Write the Functor instance for EitherT
 
+TODO: Tasing is in not finished state.
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE InstanceSigs #-}
@@ -7,6 +8,10 @@ Write the Functor instance for EitherT
 module Main where
 
 import Prelude.Unicode
+import Test.QuickCheck
+import Test.QuickCheck.Checkers
+import Test.QuickCheck.Classes
+import Data.Functor.Identity
 
 newtype EitherT e m a
   = EitherT { runEitherT ∷ m (Either e a) }
@@ -23,5 +28,11 @@ instance Functor m
 \end{code}
 \begin{code}
 main ∷ IO ()
-main = print "a"
+main = quickBatch $ functor ((id)
+    (
+      EitherT (Identity (Right True)),
+      EitherT (Identity (Right True)),
+      EitherT (Identity (Right True))
+    )
+  )
 \end{code}
