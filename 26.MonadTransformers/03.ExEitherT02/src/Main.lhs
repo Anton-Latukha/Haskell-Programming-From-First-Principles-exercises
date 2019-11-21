@@ -1,9 +1,10 @@
-Write the Functor instance for EitherT
+Write the Applicative instance for EitherT
 
 TODO: Tasing is in not finished state.
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE InstanceSigs #-}
+{-# LANGUAGE LambdaCase #-}
 
 module Main where
 
@@ -16,7 +17,8 @@ import Data.Functor.Identity
 newtype EitherT e m a
   = EitherT { runEitherT ∷ m (Either e a) }
 
-instance Functor m
+instance
+  Functor m
   ⇒ Functor (EitherT e m)
  where
   fmap ∷ (a → b) → (EitherT e m a) → (EitherT e m b)
@@ -25,14 +27,21 @@ instance Functor m
   -- AKA:
   -- fmap f r = EitherT $ (fmap . fmap) f $ runEitherT r
 
+instance
+  Monad m
+  ⇒ Applicative (EitherT e m)
+ where
+  pure ∷ a → EitherT e m a
+  pure = EitherT . pure . Right
+  (<*>) ∷ EitherT e m (a → b) → EitherT e m a → EitherT e m b
+  (<*>) (EitherT mf) (EitherT ma) = EitherT $ (>>=) ma $ \case
+    Right a -> (>>=) mf $ \case
+      Right f → pure $ Right $ f a
+      Left f → pure $ Left f
+    Left a → pure $ Left a
+
 \end{code}
 \begin{code}
 main ∷ IO ()
-main = quickBatch $ functor ((id)
-    (
-      EitherT (Identity (Right True)),
-      EitherT (Identity (Right True)),
-      EitherT (Identity (Right True))
-    )
-  )
+main = putStrLn "a"
 \end{code}
