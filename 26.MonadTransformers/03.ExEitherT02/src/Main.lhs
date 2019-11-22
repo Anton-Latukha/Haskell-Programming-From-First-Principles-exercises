@@ -9,10 +9,6 @@ TODO: Tasing is in not finished state.
 module Main where
 
 import Prelude.Unicode
-import Test.QuickCheck
-import Test.QuickCheck.Checkers
-import Test.QuickCheck.Classes
-import Data.Functor.Identity
 
 newtype EitherT e m a
   = EitherT { runEitherT ∷ m (Either e a) }
