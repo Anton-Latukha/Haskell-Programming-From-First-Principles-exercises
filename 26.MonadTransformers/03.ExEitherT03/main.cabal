@@ -1,4 +1,4 @@
-name:                  03ExEitherT01
+name:                  03ExEitherT03
 version:               0.1.0.0
 synopsis:              Synopsis text
 homepage:              http://haskellbook.com/
@@ -18,6 +18,4 @@ executable main
   other-extensions:    UnicodeSyntax
   build-depends:       base >= 4.11 && < 5
                      , unicode-prelude
-                     , QuickCheck
-                     , checkers
 

@@ -1,4 +1,4 @@
-Write the Applicative instance for EitherT
+Write the Monad instance for EitherT
 
 TODO: Tasing is in not finished state.
 \begin{code}
@@ -9,6 +9,7 @@ TODO: Tasing is in not finished state.
 module Main where
 
 import Prelude.Unicode
+import Control.Monad
 
 newtype EitherT e m a
   = EitherT { runEitherT ∷ m (Either e a) }
