@@ -1,4 +1,4 @@
-Write the Monad instance for EitherT
+Write the Monad instance for EitherT:
 
 TODO: Tasing is in not finished state.
 \begin{code}
@@ -36,6 +36,15 @@ instance
       Right f → pure $ Right $ f a
       Left f → pure $ Left f
     Left a → pure $ Left a
+
+instance
+  Monad m
+  ⇒ Monad (EitherT e m)
+ where
+  (>>=) ∷ EitherT e m a → (a → EitherT e m b) → EitherT e m b
+  (>>=) (EitherT mEa) atTmEb = EitherT $ (>>=) mEa $ \case
+    Right a -> runEitherT $ atTmEb a
+    Left a -> pure $ Left a
 
 \end{code}
 \begin{code}
