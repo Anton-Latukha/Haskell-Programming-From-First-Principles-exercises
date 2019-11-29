@@ -1,3 +1,5 @@
+Functor instance for ReaderT.
+
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
@@ -12,12 +14,6 @@ instance Functor m
  => Functor (ReaderT r m)
  where
   fmap f (ReaderT rma) = ReaderT $ (fmap . fmap) f rma
-
-instance Applicative m
- => Applicative (ReaderT r m)
- where
-  pure a = ReaderT $ pure . pure a
-  (<*>) (ReaderT rmf) (ReaderT rma) = ReaderT $ (liftA2 (<*>)) rmf rma
 
 \end{code}
 \begin{code}
