@@ -27,6 +27,7 @@ instance Monad m
  where
   (>>=) :: ReaderT r m a -> (a -> ReaderT r m b) -> ReaderT r m b
   (>>=) (ReaderT rma) atRTrmb  = ReaderT $ \ r ->
+    -- Here we see that atRTrmb & a (from rma) are provided, while r is a free variable
     (>>=) (rma r) (\ a -> runReaderT (atRTrmb a) r)
 
 \end{code}
