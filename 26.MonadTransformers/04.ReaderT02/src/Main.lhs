@@ -1,3 +1,5 @@
+Applicative instance for ReaderT.
+
 \begin{code}
 {-# LANGUAGE UnicodeSyntax #-}
 
