@@ -22,13 +22,6 @@ instance Applicative m
   pure a = ReaderT $ pure . pure a
   (<*>) (ReaderT rmf) (ReaderT rma) = ReaderT $ (liftA2 (<*>)) rmf rma
 
--- instance Monad m
---   => Monad (ReaderT r m)
---  where
---   (>>=) :: ReaderT r m a -> (a -> ReaderT r m b) -> ReaderT r m b
---   (>>=) (ReaderT rma) atRTrmb  = ReaderT $ \r -> do
---     runReaderT (k (rma atRTrmb)) r
-
 instance Monad m
   => Monad (ReaderT r m)
  where
