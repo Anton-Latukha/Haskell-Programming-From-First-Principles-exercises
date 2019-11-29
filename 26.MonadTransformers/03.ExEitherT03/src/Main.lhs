@@ -36,13 +36,15 @@ instance
         Left f → pure $ Left f
       Left a → pure $ Left a
 
-instance Monad m => Monad (EitherT e m) where
+instance
+  Monad m
+  => Monad (EitherT e m) where
   (>>=) ∷ EitherT e m a → (a → EitherT e m b) → EitherT e m b
   (>>=) (EitherT mEa) k  = EitherT $ do
     ea <- mEa
     case ea of
-      Left  l -> return (Left l)
-      Right r -> runEitherT (k r)
+      Left  a -> return (Left a)
+      Right a -> runEitherT (k a)
 
 \end{code}
 \begin{code}
