@@ -20,9 +20,7 @@ instance
  where
   fmap ∷ (a → b) → (EitherT e m a) → (EitherT e m b)
   -- Use that m is a Functor, leave the processing of a Functor Either to it
-  fmap f = EitherT . ((fmap . fmap) f) . runEitherT
-  -- AKA:
-  -- fmap f r = EitherT $ (fmap . fmap) f $ runEitherT r
+  fmap f (EitherT mEa) = EitherT $ (fmap . fmap) f mEa
 
 instance
   Monad m
@@ -31,20 +29,31 @@ instance
   pure ∷ a → EitherT e m a
   pure = EitherT . pure . Right
   (<*>) ∷ EitherT e m (a → b) → EitherT e m a → EitherT e m b
-  (<*>) (EitherT mf) (EitherT ma) = EitherT $ (>>=) ma $ \case
-    Right a -> (>>=) mf $ \case
-      Right f → pure $ Right $ f a
-      Left f → pure $ Left f
-    Left a → pure $ Left a
+  (<*>) (EitherT mEf) (EitherT mEa) =
+    EitherT $ (>>=) mEa $ \case
+      Right a -> (>>=) mEf $ \case
+        Right f → pure $ Right $ f a
+        Left f → pure $ Left f
+      Left a → pure $ Left a
 
 instance
   Monad m
   ⇒ Monad (EitherT e m)
  where
   (>>=) ∷ EitherT e m a → (a → EitherT e m b) → EitherT e m b
-  (>>=) (EitherT mEa) atTmEb = EitherT $ (>>=) mEa $ \case
-    Right a -> runEitherT $ atTmEb a
-    Left a -> pure $ Left a
+  (>>=) (EitherT mEa) atTmEb = join (fmap atTmEb $ EitherT mEa)
+   where
+    join :: EitherT e m (EitherT e m b) -> EitherT e m b
+    join (EitherT m1e1eitherTm2e2a) = go m1e1eitherTm2e2a
+      where
+      go m1 e1 (eitherTm2e2a) = goL m1 e1 (runEitherT eitherTm2e2a)
+       where
+        goL m1 e1 m2 e2a = goLL m1 e1 m2 e2a
+         where
+          goLL m1 e1 m2 (e2 a) = EitherT $ m1 <> m2 $ e1 <> e2 $ a
+  -- (>>=) (EitherT mEa) atTmEb = EitherT $ (>>=) mEa $ \case
+  --   Right a -> runEitherT $ atTmEb a
+  --   Left a -> pure $ Left a
 
 \end{code}
 \begin{code}
