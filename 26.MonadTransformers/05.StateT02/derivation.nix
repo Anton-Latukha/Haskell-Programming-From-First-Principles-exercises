@@ -1,7 +1,7 @@
 { mkDerivation, base, stdenv, unicode-prelude }:
 mkDerivation {
-  pname = "projectName";
-  version = "0.0.0.1";
+  pname = "05StateT02";
+  version = "0.1.0.0";
   src = ./.;
   isLibrary = false;
   isExecutable = true;
