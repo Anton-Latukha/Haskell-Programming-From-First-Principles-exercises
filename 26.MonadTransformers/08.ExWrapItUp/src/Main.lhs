@@ -32,9 +32,8 @@ embeddedUnwrapped :: MaybeT
            (ExceptT String
              (ReaderT () IO))
            Int
-embeddedUnwrapped = MaybeT $ ExceptT $ ReaderT $ (\ r -> do
-                                       pure $ Right (Just 1)
-                                       )
+embeddedUnwrapped = MaybeT . ExceptT . ReaderT $ \ r -> do
+                                       pure . Right . Just $ 1
 
 \end{code}
 \begin{code}
