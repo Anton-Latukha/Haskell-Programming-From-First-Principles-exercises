@@ -32,11 +32,9 @@ embeddedUnwrapped :: MaybeT
            (ExceptT String
              (ReaderT () IO))
            Int
-embeddedUnwrapped = do
-  a <- MaybeT $ ExceptT $ ReaderT $ (\ r -> do
+embeddedUnwrapped = MaybeT $ ExceptT $ ReaderT $ (\ r -> do
                                        pure $ Right (Just 1)
                                        )
-  pure a
 
 \end{code}
 \begin{code}
