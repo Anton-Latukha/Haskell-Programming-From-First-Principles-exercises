@@ -24,9 +24,9 @@ main = scotty 3000 $ do
       . (fmap Right)
       . ReaderT
       . const
-      . (\ m -> StateT (\ s -> do
-                         a <- m
-                         pure (a, s)))
+      . (\ m -> StateT $ \ s -> do
+                             a <- m
+                             pure (a, s))
       $ putStrLn "hello"
     html $
       mconcat ["<h1>Scotty, ",
