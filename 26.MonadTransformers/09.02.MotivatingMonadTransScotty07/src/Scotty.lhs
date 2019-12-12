@@ -19,12 +19,12 @@ main = scotty 3000 $ do
   get "/:word" $ do
     beam <- param "word"
     ActionT
-    . ExceptT
-    . (fmap Right)
-    . ReaderT
-    . const
-    . lift
-    $ putStrLn "hello"
+      . ExceptT
+      . (fmap Right)
+      . ReaderT
+      . const
+      . lift
+      $ putStrLn "hello"
     html $
       mconcat ["<h1>Scotty, ",
                beam,
