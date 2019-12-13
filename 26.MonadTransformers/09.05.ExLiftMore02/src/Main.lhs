@@ -43,7 +43,10 @@ instance
 instance MonadTrans (StateT s)
  where
   lift :: Monad m => m a -> StateT s m a
-  lift ma = StateT (\ s -> ma >>= (\ a -> pure (a, s)))
+  lift ma = StateT (\ s ->
+                      ma >>=
+                      (\ a ->
+                         pure (a, s)))
 
 \end{code}
 \begin{code}
