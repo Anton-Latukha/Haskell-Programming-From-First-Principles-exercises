@@ -20,6 +20,18 @@ instance Monad m =>
   fmap :: (a -> b) -> EitherT l m a -> EitherT l m b
   fmap f (EitherT mEa) = EitherT $ (fmap . fmap) f mEa
 
+instance Monad m =>
+  Applicative (EitherT l m)
+ where
+  pure :: a -> EitherT l m a
+  pure = EitherT . pure . pure
+  (<*>) :: EitherT l m (a -> b) -> EitherT l m a -> EitherT l m b
+  (<*>) (EitherT mEf) (EitherT mEa) = EitherT $ mEa >>= (\case
+    Right a -> mEf >>= (\case
+        Right f -> pure $ pure $ f a
+        Left l -> pure $ Left l)
+    Left l -> pure $ Left l)
+
 
 \end{code}
 \begin{code}
