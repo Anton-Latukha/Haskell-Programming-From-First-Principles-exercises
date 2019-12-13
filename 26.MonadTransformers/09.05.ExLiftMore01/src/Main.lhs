@@ -32,6 +32,13 @@ instance Monad m =>
         Left l -> pure $ Left l)
     Left l -> pure $ Left l)
 
+instance Monad m =>
+  Monad (EitherT l m)
+ where
+  (>>=) (EitherT mEa) k = EitherT $ mEa >>= \case
+    Right a -> runEitherT $ k a
+    Left a -> pure $ Left a
+
 
 \end{code}
 \begin{code}
