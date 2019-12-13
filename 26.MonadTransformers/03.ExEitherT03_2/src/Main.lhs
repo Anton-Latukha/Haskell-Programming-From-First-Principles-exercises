@@ -41,8 +41,8 @@ instance
   => Monad (EitherT e m) where
   (>>=) ∷ EitherT e m a → (a → EitherT e m b) → EitherT e m b
   (>>=) (EitherT mEa) k  = EitherT $ mEa >>= \case
-    Left  a -> return (Left a)
-    Right a -> runEitherT (k a)
+    Left a -> return $ Left a
+    Right a -> runEitherT $ k a
 
 \end{code}
 \begin{code}
