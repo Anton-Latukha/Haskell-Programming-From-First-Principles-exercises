@@ -1,0 +1,12 @@
+{ mkDerivation, base, scotty, stdenv, unicode-prelude }:
+mkDerivation {
+  pname = "1000MonadIOScotty01";
+  version = "0.1.0.0";
+  src = ./.;
+  isLibrary = false;
+  isExecutable = true;
+  executableHaskellDepends = [ base scotty unicode-prelude ];
+  homepage = "http://haskellbook.com/";
+  description = "Synopsis text";
+  license = stdenv.lib.licenses.bsd3;
+}
