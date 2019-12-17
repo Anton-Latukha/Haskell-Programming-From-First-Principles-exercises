@@ -10,7 +10,7 @@ instance Functor m => Functor (MaybeT m) where
   fmap f mT = MaybeT $ (fmap . fmap) f (runMaybeT mT)
 
 instance Applicative m => Applicative (MaybeT m) where
-  pure = undefined
+  pure = MaybeT . pure . pure
   (<*>) = undefined
 
 instance Monad m => Monad (MaybeT m) where
