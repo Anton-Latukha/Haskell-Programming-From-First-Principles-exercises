@@ -5,6 +5,7 @@
 
 import Control.Monad.IO.Class (MonadIO(..))
 import Control.Applicative (liftA2)
+import Control.Monad.Trans
 
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
@@ -21,10 +22,11 @@ instance Monad m => Monad (MaybeT m) where
     Nothing -> pure Nothing
     Just a -> runMaybeT (atMTmMayb a)
 
+instance MonadTrans MaybeT where
+  lift :: Functor m => m a -> MaybeT m a
+  lift ma = MaybeT $ fmap (pure) ma
+
 instance (MonadIO m) => MonadIO (MaybeT m) where
   liftIO = undefined
-
-\end{code}
-\begin{code}
 
 \end{code}
