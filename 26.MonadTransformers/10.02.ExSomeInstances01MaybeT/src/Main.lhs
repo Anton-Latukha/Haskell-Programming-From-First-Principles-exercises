@@ -3,6 +3,7 @@
 {-# LANGUAGE InstanceSigs #-}
 
 import Control.Monad.IO.Class (MonadIO(..))
+import Control.Applicative (liftA2)
 
 newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 
@@ -11,7 +12,7 @@ instance Functor m => Functor (MaybeT m) where
 
 instance Applicative m => Applicative (MaybeT m) where
   pure = MaybeT . pure . pure
-  (<*>) = undefined
+  (<*>) mTmmf mTmma = MaybeT $ (liftA2 (<*>)) (runMaybeT mTmmf) (runMaybeT mTmma)
 
 instance Monad m => Monad (MaybeT m) where
   (>>=) = undefined
