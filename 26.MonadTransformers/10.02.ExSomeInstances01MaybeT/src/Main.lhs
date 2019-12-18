@@ -27,6 +27,10 @@ instance MonadTrans MaybeT where
   lift ma = MaybeT $ fmap (pure) ma
 
 instance (MonadIO m) => MonadIO (MaybeT m) where
-  liftIO = undefined
+  liftIO :: IO a -> MaybeT m a
+  liftIO ioa = lift $ liftIO ioa
+
+\end{code}
+\begin{code}
 
 \end{code}
