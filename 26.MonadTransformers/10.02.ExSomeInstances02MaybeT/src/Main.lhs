@@ -16,7 +16,8 @@ instance Functor m => Functor (ReaderT r m) where
 instance Applicative m => Applicative (ReaderT r m) where
   pure :: a -> (ReaderT r m) a
   pure a = ReaderT $ pure . pure a
-  (<*>) mTmmf mTmma = ReaderT $ (liftA2 (<*>)) (runReaderT mTmmf) (runReaderT mTmma)
+  (<*>) rTmmf rTmma = ReaderT $ (liftA2 (<*>)) (runReaderT rTmmf) (runReaderT rTmma)
+
 
 \end{code}
 
