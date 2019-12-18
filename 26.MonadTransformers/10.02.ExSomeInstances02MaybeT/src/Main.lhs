@@ -13,6 +13,11 @@ newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 instance Functor m => Functor (ReaderT r m) where
   fmap f rT = ReaderT $ (fmap . fmap) f $ runReaderT rT
 
+instance Applicative m => Applicative (ReaderT r m) where
+  pure :: a -> (ReaderT r m) a
+  pure a = ReaderT $ pure . pure a
+  (<*>) mTmmf mTmma = ReaderT $ (liftA2 (<*>)) (runReaderT mTmmf) (runReaderT mTmma)
+
 \end{code}
 
 \begin{code}
