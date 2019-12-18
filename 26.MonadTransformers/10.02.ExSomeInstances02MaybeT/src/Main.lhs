@@ -18,6 +18,10 @@ instance Applicative m => Applicative (ReaderT r m) where
   pure a = ReaderT $ pure . pure a
   (<*>) (ReaderT mrf) (ReaderT mra) = ReaderT $ (liftA2 (<*>)) mrf mra
 
+instance Monad m => Monad (ReaderT r m) where
+  (>>=) :: (ReaderT r m) a -> (a -> (ReaderT r m) b) -> (ReaderT r m) b
+  (>>=) (ReaderT mra) atrTmrb = ReaderT $ undefined
+
 
 \end{code}
 
