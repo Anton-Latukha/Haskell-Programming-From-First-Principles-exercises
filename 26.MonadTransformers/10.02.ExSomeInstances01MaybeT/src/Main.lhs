@@ -31,6 +31,8 @@ instance (MonadIO m) => MonadIO (MaybeT m) where
   liftIO ioa = lift $ liftIO ioa
 
 \end{code}
-\begin{code}
 
+\begin{code}
+main :: IO ()
+main = putStrLn "a"
 \end{code}
