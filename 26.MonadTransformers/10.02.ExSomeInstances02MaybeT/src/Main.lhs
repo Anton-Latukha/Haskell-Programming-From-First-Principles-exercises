@@ -22,6 +22,10 @@ instance Monad m => Monad (ReaderT r m) where
   (>>=) :: (ReaderT r m) a -> (a -> (ReaderT r m) b) -> (ReaderT r m) b
   (>>=) (ReaderT mra) atrTmrb = ReaderT $ \ r -> (mra r) >>= (\ a -> runReaderT (atrTmrb a) r)
 
+instance MonadTrans (ReaderT r) where
+  lift :: Functor m => m a -> ReaderT r m a
+  lift ma = ReaderT $ pure ma
+
 
 \end{code}
 
