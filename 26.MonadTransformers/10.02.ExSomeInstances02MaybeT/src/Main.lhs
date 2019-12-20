@@ -7,7 +7,6 @@ import Control.Monad.IO.Class (MonadIO(..))
 import Control.Applicative (liftA2)
 import Control.Monad.Trans
 
-newtype MaybeT m a = MaybeT { runMaybeT :: m (Maybe a) }
 newtype ReaderT r m a = ReaderT { runReaderT :: r -> m a }
 
 instance Functor m => Functor (ReaderT r m) where
