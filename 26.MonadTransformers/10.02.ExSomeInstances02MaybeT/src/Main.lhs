@@ -26,6 +26,9 @@ instance MonadTrans (ReaderT r) where
   lift :: Functor m => m a -> ReaderT r m a
   lift ma = ReaderT $ pure ma
 
+instance (MonadIO m) => MonadIO (ReaderT r m) where
+  liftIO :: IO a -> ReaderT r m a
+  liftIO ioa = lift $ liftIO ioa
 
 \end{code}
 
