@@ -20,7 +20,7 @@ instance Applicative m => Applicative (ReaderT r m) where
 
 instance Monad m => Monad (ReaderT r m) where
   (>>=) :: (ReaderT r m) a -> (a -> (ReaderT r m) b) -> (ReaderT r m) b
-  (>>=) (ReaderT mra) atrTmrb = ReaderT $ undefined
+  (>>=) (ReaderT mra) atrTmrb = ReaderT $ \ r -> (mra r) >>= (\ a -> runReaderT (atrTmrb a) r)
 
 
 \end{code}
