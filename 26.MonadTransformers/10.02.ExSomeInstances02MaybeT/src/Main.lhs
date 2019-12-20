@@ -28,7 +28,7 @@ instance MonadTrans (ReaderT r) where
 
 instance (MonadIO m) => MonadIO (ReaderT r m) where
   liftIO :: IO a -> ReaderT r m a
-  liftIO ioa = lift $ liftIO ioa
+  liftIO = lift . liftIO
 
 \end{code}
 
