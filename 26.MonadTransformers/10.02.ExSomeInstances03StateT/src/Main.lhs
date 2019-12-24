@@ -46,8 +46,12 @@ instance MonadTrans (StateT s) where
     a <- ma
     pure (a, s)
 
+instance (MonadIO m) => MonadIO (StateT s m) where
+  liftIO :: IO a -> StateT s m a
+  liftIO = lift . liftIO
 
 \end{code}
+
 \begin{code}
 main :: IO ()
 main = putStrLn "a"
