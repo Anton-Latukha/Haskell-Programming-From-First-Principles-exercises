@@ -31,6 +31,15 @@ instance
       (x, s') <- runStateT m s
       pure (f x, s')
 
+instance
+  Monad m =>
+  Monad (StateT s m) where
+  (>>=) :: StateT s m a -> (a -> (StateT s m b)) -> StateT s m b
+  (>>=) ma atmb = StateT $
+    \ s -> do
+      (a, s') <- runStateT ma s
+      runStateT (atmb a) s'
+
 
 \end{code}
 \begin{code}
