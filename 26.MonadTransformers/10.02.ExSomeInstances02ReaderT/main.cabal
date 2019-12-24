@@ -1,4 +1,4 @@
-name:                  1002ExSomeInstances02MaybeT
+name:                  1002ExSomeInstances02ReaderT
 version:               0.1.0.0
 synopsis:              Synopsis text
 homepage:              http://haskellbook.com/

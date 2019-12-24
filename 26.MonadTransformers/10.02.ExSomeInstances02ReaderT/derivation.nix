@@ -1,6 +1,6 @@
 { mkDerivation, base, stdenv, unicode-prelude }:
 mkDerivation {
-  pname = "1002ExSomeInstances02MaybeT";
+  pname = "1002ExSomeInstances02ReaderT";
   version = "0.1.0.0";
   src = ./.;
   isLibrary = false;
