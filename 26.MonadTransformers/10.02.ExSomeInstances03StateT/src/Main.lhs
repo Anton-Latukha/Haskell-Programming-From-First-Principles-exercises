@@ -19,6 +19,18 @@ instance
       (x, s') <- runStateT m s
       pure (f x, s')
 
+instance
+  Monad m =>
+  Applicative (StateT s m) where
+  pure :: a -> StateT s m a
+  pure a = StateT $ \ s -> pure (a, s)
+  (<*>) :: StateT s m (a -> b) -> StateT s m a -> StateT s m b
+  (<*>) mf m = StateT $
+    \ s -> do
+      (f, _) <- runStateT mf s
+      (x, s') <- runStateT m s
+      pure (f x, s')
+
 
 \end{code}
 \begin{code}
