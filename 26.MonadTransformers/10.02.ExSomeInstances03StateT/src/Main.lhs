@@ -49,6 +49,6 @@ instance MonadTrans (StateT s) where
 
 \end{code}
 \begin{code}
-main ∷ IO ()
-main = print "a"
+main :: IO ()
+main = putStrLn "a"
 \end{code}
