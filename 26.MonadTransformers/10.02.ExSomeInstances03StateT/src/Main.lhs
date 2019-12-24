@@ -40,6 +40,12 @@ instance
       (a, s') <- runStateT ma s
       runStateT (atmb a) s'
 
+instance MonadTrans (StateT s) where
+  lift :: (Applicative m, Monad m) => m a -> StateT s m a
+  lift ma = StateT $ \ s -> do
+    a <- ma
+    pure (a, s)
+
 
 \end{code}
 \begin{code}
