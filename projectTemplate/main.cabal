@@ -6,10 +6,10 @@ license:               BSD3
 license-file:          LICENSE
 author:                Chris Allen, Julie Moronuki, Anton Latukha
 maintainer:            anton@latukha.com
-copyright:             Anton Latukha: 2018; Chris Allen: 2016-2018; Julie Moronuki: 2016-2018
+copyright:             Anton Latukha: 2017-2020; Chris Allen: 2016-2020; Julie Moronuki: 2016-2020
 category:              Training
 build-type:            Simple
-cabal-version:         >= 2.0
+cabal-version:         >= 3.0
 
 executable main
   hs-source-dirs:      src
