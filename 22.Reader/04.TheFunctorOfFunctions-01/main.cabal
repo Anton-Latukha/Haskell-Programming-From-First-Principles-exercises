@@ -1,0 +1,20 @@
+name:                  04TheFunctorOfFunctions01
+version:               0.1.0.0
+synopsis:              Synopsis text
+homepage:              http://haskellbook.com/
+license:               BSD3
+license-file:          LICENSE
+author:                Chris Allen, Julie Moronuki, Anton Latukha
+maintainer:            anton@latukha.com
+copyright:             Anton Latukha: 2017-2020; Chris Allen: 2016-2020; Julie Moronuki: 2016-2020
+category:              Training
+build-type:            Simple
+cabal-version:         >= 1.10
+
+executable main
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  other-extensions:    UnicodeSyntax
+  build-depends:       base >= 4.11 && < 5
+
