@@ -11,8 +11,8 @@ import Control.Monad (join)
 b = f b
 
 join $ fmap :: Monad f => (a -> f b) -> f a -> f b
-flip   >>=  :: Monad f => (a -> f b) -> f a -> f b
        =<<  :: Monad f => (a -> f b) -> f a -> f b
+flip   >>=  :: Monad f => (a -> f b) -> f a -> f b
 \begin{code}
 
 bind ∷ Monad m ⇒ (a → m b) → m a → m b
